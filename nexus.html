@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXUS • Sistema de Integração Cognitiva</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+<style>
+
+/* =========================================================
+NEXUS DESIGN SYSTEM
+========================================================= */
+
+:root{
+
+--bg:#0b1020;
+--surface:#121933;
+--surface2:#182241;
+
+--primary:#7c5cff;
+--secondary:#00c2ff;
+
+--text:#f6f8ff;
+--muted:#9ea8c7;
+
+--border:rgba(255,255,255,.08);
+
+--radius:20px;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Inter',sans-serif;
+background:
+linear-gradient(
+180deg,
+#09111f,
+#0d1628
+);
+
+color:var(--text);
+
+min-height:100vh;
+
+}
+
+.container{
+
+width:min(1400px,95%);
+margin:auto;
+
+padding:40px 0;
+
+}
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.hero{
+
+background:
+linear-gradient(
+135deg,
+rgba(124,92,255,.20),
+rgba(0,194,255,.10)
+);
+
+border:1px solid var(--border);
+
+border-radius:30px;
+
+padding:40px;
+
+margin-bottom:24px;
+
+backdrop-filter:blur(10px);
+
+}
+
+.hero h1{
+
+font-size:3rem;
+margin-bottom:12px;
+
+}
+
+.hero p{
+
+max-width:800px;
+color:var(--muted);
+
+line-height:1.7;
+
+}
+
+/* =========================================================
+GRID
+========================================================= */
+
+.grid{
+
+display:grid;
+gap:20px;
+
+}
+
+.grid-4{
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+}
+
+.card{
+
+background:var(--surface);
+
+border:1px solid var(--border);
+
+border-radius:var(--radius);
+
+padding:24px;
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-4px);
+
+border-color:
+rgba(124,92,255,.4);
+
+}
+
+.card small{
+
+display:block;
+color:var(--muted);
+
+margin-bottom:8px;
+
+}
+
+.card strong{
+
+font-size:2rem;
+
+display:block;
+
+margin-bottom:8px;
+
+}
+
+/* =========================================================
+SECTION
+========================================================= */
+
+.section{
+
+margin-top:24px;
+
+}
+
+.section h2{
+
+margin-bottom:16px;
+
+}
+
+/* =========================================================
+ARENA
+========================================================= */
+
+.arena{
+
+display:flex;
+flex-direction:column;
+gap:12px;
+
+}
+
+.thought{
+
+background:var(--surface2);
+
+padding:16px;
+
+border-radius:14px;
+
+border-left:
+4px solid var(--primary);
+
+}
+
+/* =========================================================
+GRAPH
+========================================================= */
+
+.graph{
+
+background:var(--surface);
+
+padding:20px;
+
+border-radius:20px;
+
+border:1px solid var(--border);
+
+overflow:auto;
+
+}
+
+/* =========================================================
+INSIGHTS
+========================================================= */
+
+.insight{
+
+padding:16px;
+
+background:var(--surface2);
+
+border-radius:12px;
+
+margin-bottom:12px;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =========================================================
+HERO
+========================================================= -->
+
+<section class="hero">
+
+<h1>✦ NEXUS</h1>
+
+<p>
+
+Sistema de Integração Cognitiva e Continuidade Operacional.
+
+Transformando observações, hipóteses, decisões,
+projetos e aprendizados em uma rede viva de significado.
+
+</p>
+
+</section>
+
+<!-- =========================================================
+STATUS
+========================================================= -->
+
+<div class="grid grid-4">
+
+<div class="card">
+
+<small>Energia</small>
+<strong>🟡</strong>
+Capacidade moderada
+
+</div>
+
+<div class="card">
+
+<small>Atenção</small>
+<strong>12</strong>
+Hipóteses ativas
+
+</div>
+
+<div class="card">
+
+<small>Continuidade</small>
+<strong>4</strong>
+Projetos em movimento
+
+</div>
+
+<div class="card">
+
+<small>Conexões</small>
+<strong>86</strong>
+Relações registradas
+
+</div>
+
+</div>
+
+<!-- =========================================================
+ARENA COGNITIVA
+========================================================= -->
+
+<section class="section">
+
+<h2>🧠 Arena Cognitiva</h2>
+
+<div class="arena">
+
+<div class="thought">
+Hipótese sobre regulação emocional de Guilherme
+ganhou novas evidências.
+</div>
+
+<div class="thought">
+Projeto REDE sem atualização há 18 dias.
+</div>
+
+<div class="thought">
+Novo padrão detectado em rotina familiar.
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+GRAFO
+========================================================= -->
+
+<section class="section">
+
+<h2>🕸 Grafo de Conexões</h2>
+
+<div class="graph">
+
+<div class="mermaid">
+
+graph TD
+
+A[Observação]
+
+--> B[Hipótese]
+
+B --> C[Decisão]
+
+C --> D[Projeto]
+
+D --> E[Insight]
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+INSIGHTS
+========================================================= -->
+
+<section class="section">
+
+<h2>🔍 Espelho Cognitivo</h2>
+
+<div class="insight">
+
+Você registra mais observações quando utiliza
+áudios curtos.
+
+</div>
+
+<div class="insight">
+
+Projetos avançam mais quando possuem entregáveis
+visíveis.
+
+</div>
+
+<div class="insight">
+
+Hipóteses tendem a ser revisadas após
+7 dias.
+
+</div>
+
+</section>
+
+</div>
+
+<script>
+
+mermaid.initialize({
+
+startOnLoad:true,
+theme:'dark'
+
+});
+
+/* =========================================================
+FUTURO
+=========================================================
+
+- nexus.json
+- github issues
+- github discussions
+- github projects
+- insights automáticos
+- grafo dinâmico
+- editorjs
+- radar cognitivo
+
+========================================================= */
+
+</script>
+
+</body>
+</html>
