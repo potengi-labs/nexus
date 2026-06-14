@@ -1,4 +1,130 @@
-<div class="card">
+<section class="section">
+
+    <div class="section-header">
+
+        <h2>🔎 Investigações Ativas</h2>
+
+        <small>
+            Questões, hipóteses e estruturas atualmente em evolução.
+        </small>
+
+    </div>
+
+    <div
+        id="issuesContainer"
+        class="grid">
+
+        <div class="card">
+            Carregando investigações...
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+const OWNER = "potengi-labs";
+const REPO = "nexus";
+
+async function loadIssues(){
+
+    const container =
+    document.getElementById(
+        "issuesContainer"
+    );
+
+    try{
+
+        const response =
+        await fetch(
+            `https://api.github.com/repos/${OWNER}/${REPO}/issues`
+        );
+
+        const issues =
+        await response.json();
+
+        container.innerHTML = "";
+
+        issues.forEach(issue => {
+
+            if(issue.pull_request) return;
+
+            container.innerHTML += `
+
+                <div class="card issue-card">
+
+                    <small>
+                        🔎 INVESTIGAÇÃO #${issue.number}
+                    </small>
+
+                    <strong>
+                        ${issue.title}
+                    </strong>
+
+                    <p>
+                        ${
+                            issue.body
+                            ? issue.body.substring(0,180) + "..."
+                            : "Sem descrição."
+                        }
+                    </p>
+
+                    <div class="issue-footer">
+
+                        <span>
+                            💬 ${issue.comments} evidências
+                        </span>
+
+                        <span>
+                            ${issue.state === "open"
+                                ? "🟢 Ativa"
+                                : "⚪ Encerrada"}
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="${issue.html_url}"
+                        target="_blank"
+                        class="btn-primary">
+
+                        Abrir Investigação →
+
+                    </a>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        container.innerHTML = `
+
+            <div class="card">
+
+                Não foi possível carregar as investigações.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+loadIssues();
+
+</script>
+
+
+<!--<div class="card">
 
     <small>🔎 INVESTIGAÇÃO GITHUB</small>
 
@@ -20,4 +146,4 @@
 
     </a>
 
-</div>
+</div>-->
