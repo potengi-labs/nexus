@@ -1,0 +1,365 @@
+<section class="section">
+
+    <div class="section-header">
+
+        <div>
+            <h2>🌌 Nexus Assistant</h2>
+
+            <small>
+                Espelho Cognitivo • Investigações • Hipóteses • Insights • Memória Permanente
+            </small>
+        </div>
+
+    </div>
+
+    <div class="nexus-chat">
+
+        <div class="chat-header">
+
+            <div class="chat-status">
+
+                <span class="status-dot"></span>
+
+                <strong>
+                    Conectado ao Nexus
+                </strong>
+
+            </div>
+
+            <small id="knowledgeStatus">
+                Base carregada
+            </small>
+
+        </div>
+
+        <div
+            class="chat-messages"
+            id="chatMessages">
+
+            <div class="message assistant">
+
+                <strong>🌌 Nexus</strong>
+
+                <p>
+                    Olá Sylvia.
+                </p>
+
+                <p>
+                    Posso ajudar você a explorar:
+                </p>
+
+                <ul>
+
+                    <li>🔎 Investigações ativas</li>
+
+                    <li>🧩 Hipóteses em evolução</li>
+
+                    <li>💡 Insights emergentes</li>
+
+                    <li>📚 Conhecimento consolidado</li>
+
+                    <li>∞ Memória Permanente</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="chat-suggestions">
+
+            <button class="suggestion-btn">
+                Quais hipóteses estão mais fortes?
+            </button>
+
+            <button class="suggestion-btn">
+                O que não reviso há mais de 30 dias?
+            </button>
+
+            <button class="suggestion-btn">
+                Resuma minhas investigações.
+            </button>
+
+            <button class="suggestion-btn">
+                O que merece atenção agora?
+            </button>
+
+        </div>
+
+        <div class="chat-input">
+
+            <textarea
+                id="chatPrompt"
+                placeholder="Digite sua pergunta para o Nexus..."></textarea>
+
+            <button
+                id="sendMessage">
+
+                ✨ Perguntar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+
+.nexus-chat{
+
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+
+}
+
+.chat-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.chat-status{
+
+    display:flex;
+    gap:10px;
+    align-items:center;
+
+}
+
+.status-dot{
+
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#22c55e;
+
+    box-shadow:
+    0 0 10px rgba(34,197,94,.8);
+
+}
+
+.chat-messages{
+
+    min-height:450px;
+
+    max-height:600px;
+
+    overflow:auto;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+.message{
+
+    padding:16px;
+    border-radius:14px;
+    margin-bottom:12px;
+
+}
+
+.message.assistant{
+
+    background:
+    rgba(59,130,246,.08);
+
+}
+
+.message.user{
+
+    background:
+    rgba(255,255,255,.06);
+
+}
+
+.chat-suggestions{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+
+}
+
+.suggestion-btn{
+
+    border:none;
+
+    border-radius:999px;
+
+    padding:
+    10px 14px;
+
+    cursor:pointer;
+
+}
+
+.chat-input{
+
+    display:flex;
+    gap:12px;
+
+}
+
+.chat-input textarea{
+
+    flex:1;
+
+    min-height:90px;
+
+    resize:vertical;
+
+}
+
+.chat-input button{
+
+    min-width:180px;
+
+}
+
+</style>
+
+<script>
+
+let nexusKnowledge = {};
+
+async function loadKnowledge(){
+
+    try{
+
+        const response =
+        await fetch(
+            "./assets/data/nexus-data.json"
+        );
+
+        nexusKnowledge =
+        await response.json();
+
+        document.getElementById(
+            "knowledgeStatus"
+        ).innerText =
+        "Base Nexus carregada";
+
+    }
+
+    catch(error){
+
+        document.getElementById(
+            "knowledgeStatus"
+        ).innerText =
+        "Base não encontrada";
+
+        console.error(error);
+
+    }
+
+}
+
+function addUserMessage(text){
+
+    const messages =
+    document.getElementById(
+        "chatMessages"
+    );
+
+    messages.innerHTML += `
+        <div class="message user">
+            <strong>Você</strong>
+            <p>${text}</p>
+        </div>
+    `;
+
+}
+
+function addAssistantMessage(text){
+
+    const messages =
+    document.getElementById(
+        "chatMessages"
+    );
+
+    messages.innerHTML += `
+        <div class="message assistant">
+            <strong>🌌 Nexus</strong>
+            <p>${text}</p>
+        </div>
+    `;
+
+    messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+async function askNexus(){
+
+    const prompt =
+    document.getElementById(
+        "chatPrompt"
+    ).value;
+
+    if(!prompt) return;
+
+    addUserMessage(prompt);
+
+    document.getElementById(
+        "chatPrompt"
+    ).value = "";
+
+    addAssistantMessage(
+        "Pensando..."
+    );
+
+    /*
+    FUTURA INTEGRAÇÃO GEMINI
+
+    const response =
+    await fetch(GEMINI_URL)
+
+    */
+
+}
+
+document
+.getElementById(
+    "sendMessage"
+)
+.addEventListener(
+    "click",
+    askNexus
+);
+
+document
+.querySelectorAll(
+    ".suggestion-btn"
+)
+.forEach(btn=>{
+
+    btn.addEventListener(
+        "click",
+        ()=>{
+
+            document.getElementById(
+                "chatPrompt"
+            ).value =
+            btn.innerText;
+
+        }
+    );
+
+});
+
+loadKnowledge();
+
+</script>
