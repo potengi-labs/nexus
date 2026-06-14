@@ -1,5 +1,60 @@
-<script>
-  (async () => {
+
+<style>body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        sans-serif;
+    background: var(--highcharts-background-color);
+    color: var(--highcharts-neutral-color-100);
+}
+
+.highcharts-figure {
+    margin: 0 auto;
+    min-width: 310px;
+    max-width: 800px;
+}
+
+#container {
+    height: 600px;
+}
+
+.highcharts-description {
+    background: light-dark(#f2f6f2, #323232);
+    border-radius: 0 4px 4px 0;
+    border-left: 2px solid light-dark(#1d6aff, #fff);
+    font-size: 0.8rem;
+    font-style: italic;
+    padding: 8px 16px;
+    margin: 2em 10px 1em;
+}
+
+</style>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/geoheatmap.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        This chart shows the density of cities in the world, plotted
+        by their latitude and longitude. It uses the orthographic projection and
+        <code>geoheatmap</code> series type, which creates a grid of tiles that
+        correspond to the latitude and longitude of each data point.
+        The value of the geoheatmap is represented by the color of each tile.
+    </p>
+</figure>
+
+<script>(async () => {
     const topology = await fetch(
             'https://code.highcharts.com/mapdata/custom/world.topo.json'
         ).then(response => response.json()),
