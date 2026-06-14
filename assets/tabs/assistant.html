@@ -3,157 +3,135 @@
     <div class="section-header">
 
         <div>
-
             <h2>🌌 Nexus Assistant</h2>
 
             <small>
-                Espelho Cognitivo • Investigações • Hipóteses • Insights • Memória Permanente
+                GitHub Issues • Projects • Wiki • Gemini • Memória Permanente
             </small>
-
         </div>
 
         <div class="assistant-status">
 
-            <span class="status-dot"></span>
-
-            <small id="assistantStatus">
-                Nexus Online
-            </small>
+            <span id="assistantStatus">
+                Carregando...
+            </span>
 
         </div>
 
     </div>
 
-    <!-- DASHBOARD -->
+    <div class="assistant-grid">
 
-    <div class="assistant-dashboard">
+        <!-- CHAT -->
 
-        <div class="card metric-card">
+        <div class="assistant-chat">
 
-            <small>🔎 Investigações</small>
+            <div
+                id="chatMessages"
+                class="chat-messages">
 
-            <strong id="investigationsCount">
-                12
-            </strong>
+                <div class="message assistant">
 
-        </div>
+                    <strong>🌌 Nexus</strong>
 
-        <div class="card metric-card">
+                    <p>
+                        Olá Sylvia.
+                    </p>
 
-            <small>🧩 Hipóteses</small>
+                    <p>
+                        Estou conectado ao ecossistema Nexus.
+                    </p>
 
-            <strong id="hypothesesCount">
-                8
-            </strong>
+                    <ul>
+                        <li>🔎 Investigações (Issues)</li>
+                        <li>📋 Prioridades (Projects)</li>
+                        <li>📚 Conhecimento (Wiki)</li>
+                        <li>∞ Memória Permanente</li>
+                    </ul>
 
-        </div>
+                </div>
 
-        <div class="card metric-card">
+            </div>
 
-            <small>💡 Insights</small>
+            <div class="chat-suggestions">
 
-            <strong id="insightsCount">
-                24
-            </strong>
+                <button class="suggestion-btn">
+                    O que merece atenção agora?
+                </button>
 
-        </div>
+                <button class="suggestion-btn">
+                    Resuma minhas investigações
+                </button>
 
-        <div class="card metric-card">
+                <button class="suggestion-btn">
+                    Quais hipóteses estão mais fortes?
+                </button>
 
-            <small>📚 Conhecimento</small>
+                <button class="suggestion-btn">
+                    O que está parado?
+                </button>
 
-            <strong id="knowledgeCount">
-                56
-            </strong>
+            </div>
 
-        </div>
+            <div class="chat-input">
 
-    </div>
+                <textarea
+                    id="chatPrompt"
+                    placeholder="Pergunte ao Nexus..."></textarea>
 
-    <!-- CHAT -->
+                <button id="sendMessage">
 
-    <div class="nexus-chat">
+                    ✨ Perguntar
 
-        <div
-            id="chatMessages"
-            class="chat-messages">
-
-            <div class="message assistant">
-
-                <strong>
-                    🌌 Nexus
-                </strong>
-
-                <p>
-                    Olá Sylvia.
-                </p>
-
-                <p>
-                    Estou conectado à memória do Nexus.
-                </p>
-
-                <p>
-                    Posso ajudar você a:
-                </p>
-
-                <ul>
-
-                    <li>🔎 Explorar investigações</li>
-
-                    <li>🧩 Revisar hipóteses</li>
-
-                    <li>💡 Identificar padrões</li>
-
-                    <li>📚 Recuperar conhecimento</li>
-
-                    <li>∞ Conectar fragmentos dispersos</li>
-
-                </ul>
+                </button>
 
             </div>
 
         </div>
 
-        <!-- SUGESTÕES -->
+        <!-- PAINEL LATERAL -->
 
-        <div class="chat-suggestions">
+        <div class="assistant-sidebar">
 
-            <button class="suggestion-btn">
-                O que merece atenção agora?
-            </button>
+            <div class="source-card">
 
-            <button class="suggestion-btn">
-                Quais hipóteses estão mais fortes?
-            </button>
+                <small>🔎 Issues</small>
 
-            <button class="suggestion-btn">
-                Resuma minhas investigações.
-            </button>
+                <strong id="issuesCount">
+                    --
+                </strong>
 
-            <button class="suggestion-btn">
-                O que não reviso há mais de 30 dias?
-            </button>
+            </div>
 
-            <button class="suggestion-btn">
-                Quais padrões estão emergindo?
-            </button>
+            <div class="source-card">
 
-        </div>
+                <small>📋 Projects</small>
 
-        <!-- INPUT -->
+                <strong id="projectsCount">
+                    --
+                </strong>
 
-        <div class="chat-input">
+            </div>
 
-            <textarea
-                id="chatPrompt"
-                placeholder="Pergunte qualquer coisa ao Nexus..."></textarea>
+            <div class="source-card">
 
-            <button
-                id="sendMessage">
+                <small>📚 Wiki</small>
 
-                ✨ Perguntar
+                <strong id="wikiCount">
+                    --
+                </strong>
 
-            </button>
+            </div>
+
+            <div class="source-card">
+
+                <small>∞ Memória</small>
+
+                <strong id="memoryCount">
+                    --
+                </strong>
+
+            </div>
 
         </div>
 
@@ -163,70 +141,15 @@
 
 <style>
 
-/* ======================================
-   STATUS
-====================================== */
-
-.assistant-status{
-
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-}
-
-.status-dot{
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    background:#22c55e;
-
-    box-shadow:
-    0 0 12px rgba(34,197,94,.8);
-
-}
-
-/* ======================================
-   DASHBOARD
-====================================== */
-
-.assistant-dashboard{
+.assistant-grid{
 
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
-
-    gap:16px;
-
-    margin-bottom:24px;
+    grid-template-columns: 1fr 280px;
+    gap:24px;
 
 }
 
-.metric-card{
-
-    text-align:center;
-
-}
-
-.metric-card strong{
-
-    display:block;
-
-    margin-top:10px;
-
-    font-size:2rem;
-
-}
-
-/* ======================================
-   CHAT
-====================================== */
-
-.nexus-chat{
+.assistant-chat{
 
     display:flex;
     flex-direction:column;
@@ -236,18 +159,17 @@
 
 .chat-messages{
 
-    min-height:500px;
+    min-height:550px;
+    max-height:650px;
 
-    max-height:700px;
-
-    overflow-y:auto;
+    overflow:auto;
 
     padding:20px;
 
     border-radius:20px;
 
     background:
-    rgba(255,255,255,.04);
+    rgba(255,255,255,.03);
 
     border:
     1px solid rgba(255,255,255,.08);
@@ -257,17 +179,15 @@
 .message{
 
     padding:16px;
-
     border-radius:16px;
-
-    margin-bottom:12px;
+    margin-bottom:14px;
 
 }
 
 .message.assistant{
 
     background:
-    rgba(59,130,246,.08);
+    rgba(79,70,229,.12);
 
 }
 
@@ -278,16 +198,10 @@
 
 }
 
-/* ======================================
-   SUGESTÕES
-====================================== */
-
 .chat-suggestions{
 
     display:flex;
-
     flex-wrap:wrap;
-
     gap:10px;
 
 }
@@ -305,14 +219,9 @@
 
 }
 
-/* ======================================
-   INPUT
-====================================== */
-
 .chat-input{
 
     display:flex;
-
     gap:12px;
 
 }
@@ -333,49 +242,53 @@
 
 }
 
-/* ======================================
-   ORB
-====================================== */
+.assistant-sidebar{
 
-#nexusOrb{
-
-    position:fixed;
-
-    bottom:24px;
-    right:24px;
-
-    width:64px;
-    height:64px;
-
-    border:none;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    font-size:28px;
-
-    z-index:9999;
-
-    background:
-    linear-gradient(
-        135deg,
-        #4f46e5,
-        #06b6d4
-    );
-
-    color:white;
-
-    box-shadow:
-    0 0 30px rgba(79,70,229,.4);
-
-    transition:.3s;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
 
 }
 
-#nexusOrb:hover{
+.source-card{
 
-    transform:scale(1.08);
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,.03);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+.source-card strong{
+
+    display:block;
+
+    font-size:2rem;
+
+    margin-top:10px;
+
+}
+
+.assistant-status{
+
+    font-size:.85rem;
+
+    opacity:.8;
+
+}
+
+@media(max-width:900px){
+
+    .assistant-grid{
+
+        grid-template-columns:1fr;
+
+    }
 
 }
 
@@ -383,57 +296,34 @@
 
 <script>
 
-/* ======================================
-   BASE NEXUS
-====================================== */
+/* =====================================================
+CONFIG
+===================================================== */
 
-let nexusKnowledge = {};
+const OWNER = "potengi-labs";
 
-/* ======================================
-   CARREGAR MEMÓRIA
-====================================== */
+const REPO = "nexus";
 
-async function loadKnowledge(){
+const GEMINI_API_KEY =
+"COLOQUE_SUA_CHAVE";
 
-    try{
+/* =====================================================
+BASE NEXUS
+===================================================== */
 
-        const response =
-        await fetch(
-            "./assets/data/nexus-data.json"
-        );
+let nexusData = {};
 
-        nexusKnowledge =
-        await response.json();
+let githubIssues = [];
 
-        document
-        .getElementById(
-            "assistantStatus"
-        )
-        .innerText =
-        "Base Nexus carregada";
+let githubProjects = [];
 
-    }
+let wikiPages = [];
 
-    catch(error){
+/* =====================================================
+UI
+===================================================== */
 
-        console.error(error);
-
-        document
-        .getElementById(
-            "assistantStatus"
-        )
-        .innerText =
-        "Base local indisponível";
-
-    }
-
-}
-
-/* ======================================
-   CHAT UI
-====================================== */
-
-function addUserMessage(text){
+function addMessage(type,text){
 
     const container =
     document.getElementById(
@@ -441,24 +331,10 @@ function addUserMessage(text){
     );
 
     container.innerHTML += `
-        <div class="message user">
-            <strong>Você</strong>
-            <p>${text}</p>
-        </div>
-    `;
-
-}
-
-function addAssistantMessage(text){
-
-    const container =
-    document.getElementById(
-        "chatMessages"
-    );
-
-    container.innerHTML += `
-        <div class="message assistant">
-            <strong>🌌 Nexus</strong>
+        <div class="message ${type}">
+            <strong>
+                ${type==="assistant" ? "🌌 Nexus" : "Você"}
+            </strong>
             <p>${text}</p>
         </div>
     `;
@@ -468,50 +344,245 @@ function addAssistantMessage(text){
 
 }
 
-/* ======================================
-   GEMINI PLACEHOLDER
-====================================== */
+/* =====================================================
+LOAD NEXUS JSON
+===================================================== */
 
-async function askNexus(){
+async function loadNexusMemory(){
 
-    const prompt =
-    document.getElementById(
-        "chatPrompt"
-    ).value.trim();
+    try{
 
-    if(!prompt) return;
+        const response =
+        await fetch(
+            "./assets/data/nexus-data.json"
+        );
 
-    addUserMessage(prompt);
+        nexusData =
+        await response.json();
 
-    document.getElementById(
-        "chatPrompt"
-    ).value = "";
+        document
+        .getElementById(
+            "memoryCount"
+        )
+        .innerText =
+        Object.keys(
+            nexusData
+        ).length;
 
-    addAssistantMessage(
-        "Analisando investigações, hipóteses e memória..."
-    );
+    }
 
-    /*
-    FUTURO:
+    catch(error){
 
-    fetch(
-        GEMINI_ENDPOINT
-    )
+        console.error(error);
 
-    enviar:
-    - prompt
-    - wiki
-    - issues
-    - projects
-    - nexus-data.json
-
-    */
+    }
 
 }
 
-/* ======================================
-   EVENTOS
-====================================== */
+/* =====================================================
+LOAD ISSUES
+===================================================== */
+
+async function loadIssues(){
+
+    try{
+
+        const response =
+        await fetch(
+            `https://api.github.com/repos/${OWNER}/${REPO}/issues`
+        );
+
+        githubIssues =
+        await response.json();
+
+        document
+        .getElementById(
+            "issuesCount"
+        )
+        .innerText =
+        githubIssues.length;
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+/* =====================================================
+LOAD PROJECTS
+===================================================== */
+
+async function loadProjects(){
+
+    document
+    .getElementById(
+        "projectsCount"
+    )
+    .innerText = "1";
+
+}
+
+/* =====================================================
+LOAD WIKI INDEX
+===================================================== */
+
+async function loadWiki(){
+
+    try{
+
+        const response =
+        await fetch(
+            "./wiki/index.json"
+        );
+
+        wikiPages =
+        await response.json();
+
+        document
+        .getElementById(
+            "wikiCount"
+        )
+        .innerText =
+        wikiPages.length;
+
+    }
+
+    catch(error){
+
+        document
+        .getElementById(
+            "wikiCount"
+        )
+        .innerText =
+        "--";
+
+    }
+
+}
+
+/* =====================================================
+GEMINI
+===================================================== */
+
+async function askGemini(prompt){
+
+    const context = `
+
+NEXUS MEMORY:
+
+${JSON.stringify(nexusData)}
+
+ISSUES:
+
+${JSON.stringify(githubIssues)}
+
+PROJECTS:
+
+${JSON.stringify(githubProjects)}
+
+WIKI:
+
+${JSON.stringify(wikiPages)}
+
+PERGUNTA:
+
+${prompt}
+
+`;
+
+    const response =
+    await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`,
+        {
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+                contents:[{
+
+                    parts:[{
+
+                        text:context
+
+                    }]
+
+                }]
+
+            })
+        }
+    );
+
+    const data =
+    await response.json();
+
+    return data
+        ?.candidates?.[0]
+        ?.content?.parts?.[0]
+        ?.text
+        || "Nenhuma resposta.";
+
+}
+
+/* =====================================================
+ASK
+===================================================== */
+
+async function askNexus(){
+
+    const input =
+    document.getElementById(
+        "chatPrompt"
+    );
+
+    const prompt =
+    input.value.trim();
+
+    if(!prompt) return;
+
+    addMessage(
+        "user",
+        prompt
+    );
+
+    input.value = "";
+
+    addMessage(
+        "assistant",
+        "Pensando..."
+    );
+
+    const msgs =
+    document.querySelectorAll(
+        ".message.assistant"
+    );
+
+    const last =
+    msgs[msgs.length-1];
+
+    const answer =
+    await askGemini(
+        prompt
+    );
+
+    last.innerHTML = `
+        <strong>🌌 Nexus</strong>
+        <p>${answer}</p>
+    `;
+
+}
+
+/* =====================================================
+EVENTS
+===================================================== */
 
 document
 .getElementById(
@@ -544,10 +615,27 @@ document
 
 });
 
-/* ======================================
-   START
-====================================== */
+/* =====================================================
+BOOT
+===================================================== */
 
-loadKnowledge();
+(async()=>{
+
+    await loadNexusMemory();
+
+    await loadIssues();
+
+    await loadProjects();
+
+    await loadWiki();
+
+    document
+    .getElementById(
+        "assistantStatus"
+    )
+    .innerText =
+    "Nexus Online";
+
+})();
 
 </script>
