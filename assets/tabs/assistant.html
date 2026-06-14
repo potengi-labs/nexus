@@ -1,0 +1,553 @@
+<section class="section">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>🌌 Nexus Assistant</h2>
+
+            <small>
+                Espelho Cognitivo • Investigações • Hipóteses • Insights • Memória Permanente
+            </small>
+
+        </div>
+
+        <div class="assistant-status">
+
+            <span class="status-dot"></span>
+
+            <small id="assistantStatus">
+                Nexus Online
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div class="assistant-dashboard">
+
+        <div class="card metric-card">
+
+            <small>🔎 Investigações</small>
+
+            <strong id="investigationsCount">
+                12
+            </strong>
+
+        </div>
+
+        <div class="card metric-card">
+
+            <small>🧩 Hipóteses</small>
+
+            <strong id="hypothesesCount">
+                8
+            </strong>
+
+        </div>
+
+        <div class="card metric-card">
+
+            <small>💡 Insights</small>
+
+            <strong id="insightsCount">
+                24
+            </strong>
+
+        </div>
+
+        <div class="card metric-card">
+
+            <small>📚 Conhecimento</small>
+
+            <strong id="knowledgeCount">
+                56
+            </strong>
+
+        </div>
+
+    </div>
+
+    <!-- CHAT -->
+
+    <div class="nexus-chat">
+
+        <div
+            id="chatMessages"
+            class="chat-messages">
+
+            <div class="message assistant">
+
+                <strong>
+                    🌌 Nexus
+                </strong>
+
+                <p>
+                    Olá Sylvia.
+                </p>
+
+                <p>
+                    Estou conectado à memória do Nexus.
+                </p>
+
+                <p>
+                    Posso ajudar você a:
+                </p>
+
+                <ul>
+
+                    <li>🔎 Explorar investigações</li>
+
+                    <li>🧩 Revisar hipóteses</li>
+
+                    <li>💡 Identificar padrões</li>
+
+                    <li>📚 Recuperar conhecimento</li>
+
+                    <li>∞ Conectar fragmentos dispersos</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- SUGESTÕES -->
+
+        <div class="chat-suggestions">
+
+            <button class="suggestion-btn">
+                O que merece atenção agora?
+            </button>
+
+            <button class="suggestion-btn">
+                Quais hipóteses estão mais fortes?
+            </button>
+
+            <button class="suggestion-btn">
+                Resuma minhas investigações.
+            </button>
+
+            <button class="suggestion-btn">
+                O que não reviso há mais de 30 dias?
+            </button>
+
+            <button class="suggestion-btn">
+                Quais padrões estão emergindo?
+            </button>
+
+        </div>
+
+        <!-- INPUT -->
+
+        <div class="chat-input">
+
+            <textarea
+                id="chatPrompt"
+                placeholder="Pergunte qualquer coisa ao Nexus..."></textarea>
+
+            <button
+                id="sendMessage">
+
+                ✨ Perguntar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+
+/* ======================================
+   STATUS
+====================================== */
+
+.assistant-status{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+}
+
+.status-dot{
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+    0 0 12px rgba(34,197,94,.8);
+
+}
+
+/* ======================================
+   DASHBOARD
+====================================== */
+
+.assistant-dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:16px;
+
+    margin-bottom:24px;
+
+}
+
+.metric-card{
+
+    text-align:center;
+
+}
+
+.metric-card strong{
+
+    display:block;
+
+    margin-top:10px;
+
+    font-size:2rem;
+
+}
+
+/* ======================================
+   CHAT
+====================================== */
+
+.nexus-chat{
+
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+
+}
+
+.chat-messages{
+
+    min-height:500px;
+
+    max-height:700px;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+.message{
+
+    padding:16px;
+
+    border-radius:16px;
+
+    margin-bottom:12px;
+
+}
+
+.message.assistant{
+
+    background:
+    rgba(59,130,246,.08);
+
+}
+
+.message.user{
+
+    background:
+    rgba(255,255,255,.06);
+
+}
+
+/* ======================================
+   SUGESTÕES
+====================================== */
+
+.chat-suggestions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+.suggestion-btn{
+
+    border:none;
+
+    border-radius:999px;
+
+    padding:
+    10px 16px;
+
+    cursor:pointer;
+
+}
+
+/* ======================================
+   INPUT
+====================================== */
+
+.chat-input{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.chat-input textarea{
+
+    flex:1;
+
+    min-height:100px;
+
+    resize:vertical;
+
+}
+
+.chat-input button{
+
+    min-width:180px;
+
+}
+
+/* ======================================
+   ORB
+====================================== */
+
+#nexusOrb{
+
+    position:fixed;
+
+    bottom:24px;
+    right:24px;
+
+    width:64px;
+    height:64px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:28px;
+
+    z-index:9999;
+
+    background:
+    linear-gradient(
+        135deg,
+        #4f46e5,
+        #06b6d4
+    );
+
+    color:white;
+
+    box-shadow:
+    0 0 30px rgba(79,70,229,.4);
+
+    transition:.3s;
+
+}
+
+#nexusOrb:hover{
+
+    transform:scale(1.08);
+
+}
+
+</style>
+
+<script>
+
+/* ======================================
+   BASE NEXUS
+====================================== */
+
+let nexusKnowledge = {};
+
+/* ======================================
+   CARREGAR MEMÓRIA
+====================================== */
+
+async function loadKnowledge(){
+
+    try{
+
+        const response =
+        await fetch(
+            "./assets/data/nexus-data.json"
+        );
+
+        nexusKnowledge =
+        await response.json();
+
+        document
+        .getElementById(
+            "assistantStatus"
+        )
+        .innerText =
+        "Base Nexus carregada";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        document
+        .getElementById(
+            "assistantStatus"
+        )
+        .innerText =
+        "Base local indisponível";
+
+    }
+
+}
+
+/* ======================================
+   CHAT UI
+====================================== */
+
+function addUserMessage(text){
+
+    const container =
+    document.getElementById(
+        "chatMessages"
+    );
+
+    container.innerHTML += `
+        <div class="message user">
+            <strong>Você</strong>
+            <p>${text}</p>
+        </div>
+    `;
+
+}
+
+function addAssistantMessage(text){
+
+    const container =
+    document.getElementById(
+        "chatMessages"
+    );
+
+    container.innerHTML += `
+        <div class="message assistant">
+            <strong>🌌 Nexus</strong>
+            <p>${text}</p>
+        </div>
+    `;
+
+    container.scrollTop =
+    container.scrollHeight;
+
+}
+
+/* ======================================
+   GEMINI PLACEHOLDER
+====================================== */
+
+async function askNexus(){
+
+    const prompt =
+    document.getElementById(
+        "chatPrompt"
+    ).value.trim();
+
+    if(!prompt) return;
+
+    addUserMessage(prompt);
+
+    document.getElementById(
+        "chatPrompt"
+    ).value = "";
+
+    addAssistantMessage(
+        "Analisando investigações, hipóteses e memória..."
+    );
+
+    /*
+    FUTURO:
+
+    fetch(
+        GEMINI_ENDPOINT
+    )
+
+    enviar:
+    - prompt
+    - wiki
+    - issues
+    - projects
+    - nexus-data.json
+
+    */
+
+}
+
+/* ======================================
+   EVENTOS
+====================================== */
+
+document
+.getElementById(
+    "sendMessage"
+)
+.addEventListener(
+    "click",
+    askNexus
+);
+
+document
+.querySelectorAll(
+    ".suggestion-btn"
+)
+.forEach(btn=>{
+
+    btn.addEventListener(
+        "click",
+        ()=>{
+
+            document
+            .getElementById(
+                "chatPrompt"
+            )
+            .value =
+            btn.innerText;
+
+        }
+    );
+
+});
+
+/* ======================================
+   START
+====================================== */
+
+loadKnowledge();
+
+</script>
