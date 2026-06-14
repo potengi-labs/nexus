@@ -88,18 +88,16 @@ TOPBAR
     </section>
     BANNER SLOT -->
 
- <nav class="horizontal-menu">
-
-    <button class="menu-tab active" data-tab="painel">Painel Geral</button>
-    <button class="menu-tab" data-tab="sistema">Diário Longitudinal</button>
-    <button class="menu-tab" data-tab="projetos">Desenvolvimento</button>
-    <button class="menu-tab" data-tab="guilherme">Centro</button>
-    <button class="menu-tab" data-tab="decisoes">Decisões Compartilhadas</button>
-    <button class="menu-tab" data-tab="biblioteca">Biblioteca Viva</button>
-    <button class="menu-tab" data-tab="agenda">Agenda</button>
-    <button class="menu-tab" data-tab="memoria">Memória do Desenvolvimento</button>
-    <button class="menu-tab" data-tab="governanca">Rede de Apoio</button>
-
+<nav class="horizontal-menu">
+    <button class="menu-tab active" data-tab="hoje">        📅 Hoje    </button>
+    <button class="menu-tab" data-tab="fragmentos">        ⭐ Fragmentos    </button>
+    <button class="menu-tab" data-tab="investigacoes">        🔎 Investigações    </button>
+    <button class="menu-tab" data-tab="hipoteses">        🧩 Hipóteses    </button>
+    <button class="menu-tab" data-tab="insights">        💡 Insights    </button>
+    <button class="menu-tab" data-tab="biblioteca">        📚 Biblioteca Viva    </button>
+    <button class="menu-tab" data-tab="decisoes">        📜 Decisões    </button>
+    <button class="menu-tab" data-tab="espelho">        🪞 Espelho Cognitivo    </button>
+    <button class="menu-tab" data-tab="memoria">        ∞ Memória Permanente    </button>
 </nav>
 
 <div class="layout">
@@ -108,175 +106,286 @@ TOPBAR
 
     <main class="content">
 
-        <!-- PAINEL GERAL -->
+    <section id="painel" class="tab-content active">
 
-        <section id="painel" class="tab-content active">
+```
+<div class="section">
 
-            <div class="section">
+    <div class="section-header">
+        <h2>🌌 Horizonte Cognitivo</h2>
+        <small>
+            Conectando fragmentos, investigações, hipóteses e descobertas em um único panorama operacional.
+        </small>
+    </div>
 
-                <div class="section-header">
-                    <h2>🧒 Painel de Desenvolvimento Longitudinal</h2>
-                    <small>
-                        Acompanhamento integrado do desenvolvimento, bem-estar,
-                        rotina e aprendizagem de Angelo Victor.
-                    </small>
+    <div class="grid">
+
+        <div class="card">
+            <small>📅 Hoje</small>
+            <strong>4 compromissos</strong>
+            <p>
+                Agenda integrada com eventos, atendimentos e pontos de atenção do dia.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>🔎 Investigações Ativas</small>
+            <strong>7</strong>
+            <p>
+                Temas atualmente em observação e construção de entendimento.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>🧩 Hipóteses</small>
+            <strong>12</strong>
+            <p>
+                Relações e explicações sendo acompanhadas pelo Nexus.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>✨ Descobertas</small>
+            <strong>3 novas</strong>
+            <p>
+                Padrões emergentes identificados a partir das observações recentes.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="section-header">
+        <h2>🎯 O que merece atenção agora?</h2>
+        <small>
+            Síntese operacional produzida pelo Nexus.
+        </small>
+    </div>
+
+    <div class="card">
+
+        <small>PRIORIDADE CENTRAL</small>
+
+        <h3>
+            Revisar a investigação "Previsibilidade e Ansiedade"
+        </h3>
+
+        <p>
+            Novas observações registradas esta semana fortaleceram a hipótese
+            de que antecipação visual reduz resistência a mudanças.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="section-header">
+        <h2>🌌 Constelações Ativas</h2>
+        <small>
+            Grandes temas atualmente em evolução.
+        </small>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <small>Constelação</small>
+            <strong>Guilherme</strong>
+            <p>
+                34 estrelas • 5 hipóteses • 2 descobertas recentes
+            </p>
+        </div>
+
+        <div class="card">
+            <small>Constelação</small>
+            <strong>Autocuidado</strong>
+            <p>
+                18 estrelas • 3 hipóteses • monitoramento contínuo
+            </p>
+        </div>
+
+        <div class="card">
+            <small>Constelação</small>
+            <strong>Rotina Familiar</strong>
+            <p>
+                22 estrelas • 4 hipóteses • padrões em formação
+            </p>
+        </div>
+
+        <div class="card">
+            <small>Constelação</small>
+            <strong>Projetos Estratégicos</strong>
+            <p>
+                REDE • PRISMA • Desenvolvimento do Nexus
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="section-header">
+        <h2>🪞 Espelho Cognitivo</h2>
+        <small>
+            O que o Nexus está aprendendo sobre seus padrões.
+        </small>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <small>Insight</small>
+            <p>
+                Registros feitos pela manhã apresentam maior profundidade analítica.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>Padrão Detectado</small>
+            <p>
+                Investigações revisadas semanalmente geram mais descobertas.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>Atenção</small>
+            <p>
+                Duas hipóteses relevantes estão sem atualização há mais de 14 dias.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+
+<section>
+
+    <div class="section">
+
+        <div class="section-header">
+            <h2>🌌 Constelações Cognitivas</h2>
+            <small>
+                Grandes temas que concentram observações, investigações,
+                hipóteses, descobertas e aprendizados em evolução.
+            </small>
+        </div>
+
+        <div class="continuity-map">
+
+            <div class="map-column">
+
+                <h3>🔎 Investigações</h3>
+
+                <div class="map-card">
+                    <strong>O que está sendo compreendido agora</strong>
+                    Temas ativos em observação contínua,
+                    buscando identificar padrões,
+                    relações e explicações relevantes.
                 </div>
 
-                <div class="section">
+            </div>
 
-                    <div class="section-header">
-                        <h2>Panorama Atual</h2>
-                        <small>
-                            Visão integrada do desenvolvimento e das necessidades
-                            atuais de Angelo Victor.
-                        </small>
-                    </div>
+            <div class="map-column">
 
-                    <div class="grid">
+                <h3>🧩 Hipóteses</h3>
 
-                        <div class="card">
-                            <small>Idade Atual</small>
-                            <strong>2 anos</strong>
-                            <p>
-                                Fase de desenvolvimento acompanhada pelo vital.
-                            </p>
-                        </div>
-
-                        <div class="card">
-                            <small>Domínios Monitorados</small>
-                            <strong>12</strong>
-                            <p>
-                                Áreas acompanhadas continuamente pela família e profissionais.
-                            </p>
-                        </div>
-
-                        <div class="card">
-                            <small>Objetivo</small>
-                            <strong>∞</strong>
-                            <p>
-                                Construir continuidade entre observações,
-                                aprendizados e decisões.
-                            </p>
-                        </div>
-
-                        <div class="card">
-                            <small>Acompanhamento</small>
-                            <strong>Contínuo</strong>
-                            <p>
-                                Registros vivos ao longo do crescimento.
-                            </p>
-                        </div>
-
-                    </div>
-
+                <div class="map-card">
+                    <strong>Conexões em construção</strong>
+                    Relações entre eventos, comportamentos,
+                    contextos e resultados que ainda estão
+                    sendo testadas e acompanhadas.
                 </div>
-                
-        </section>
 
-        <section>
-                <div class="section">
+            </div>
 
-                    <div class="section-header">
-                        <h2>🧭 Radar de Desenvolvimento</h2>
-                        <small>
-                            Áreas prioritárias para compreender e apoiar
-                            o crescimento de Angelo Victor.
-                        </small>
-                    </div>
+            <div class="map-column">
 
-                    <div class="continuity-map">
+                <h3>✨ Descobertas</h3>
 
-                        <div class="map-column">
-
-                            <h3>Desenvolvimento</h3>
-
-                            <div class="map-card">
-                                <strong>Como Angelo está aprendendo</strong>
-                                Linguagem, cognição, brincadeiras,
-                                atenção compartilhada e aquisição de novas habilidades.
-                            </div>
-
-                        </div>
-
-                        <div class="map-column">
-
-                            <h3>Regulação</h3>
-
-                            <div class="map-card">
-                                <strong>Como Angelo vivencia emoções e mudanças</strong>
-                                Identificação de gatilhos, estratégias de apoio
-                                e recuperação emocional.
-                            </div>
-
-                        </div>
-
-                        <div class="map-column">
-
-                            <h3>Autonomia</h3>
-
-                            <div class="map-card">
-                                <strong>Como Angelo participa da própria rotina</strong>
-                                Alimentação, higiene, escolhas e desenvolvimento
-                                gradual da independência.
-                            </div>
-
-                        </div>
-
-                        <div class="map-column">
-
-                            <h3>Bem-Estar</h3>
-
-                            <div class="map-card">
-                                <strong>Como Angelo está vivendo seu cotidiano</strong>
-                                Sono, alimentação, saúde, conforto,
-                                participação e qualidade de vida.
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-                <div class="section">
-
-                    <div class="card">
-
-                        <strong style="font-size:3rem;display:block;text-align:center;margin-bottom:16px;">
-                            ∞
-                        </strong>
-
-                        <small>PROPÓSITO DO vital</small>
-
-                        <h3>
-                            Acompanhar Angelo de forma integrada e contínua.
-                        </h3>
-
-                        <p>
-                            Cada observação ajuda a compreender não apenas
-                            comportamentos isolados, mas a trajetória completa
-                            do seu desenvolvimento.
-                        </p>
-
-                        <p>
-                            O objetivo é construir uma memória compartilhada entre
-                            família, profissionais, escola e demais pessoas
-                            envolvidas em seu cuidado.
-                        </p>
-
-                        <p>
-                            Ao longo do tempo, o sistema transforma registros
-                            dispersos em conhecimento útil para apoiar decisões
-                            mais conscientes e personalizadas.
-                        </p>
-
-                        <p style="margin-top:20px;font-weight:600;">
-                            Abrir acompanhamento →
-                        </p>
-
-                    </div>
-
+                <div class="map-card">
+                    <strong>Padrões que começaram a emergir</strong>
+                    Aprendizados gerados a partir da análise
+                    longitudinal das observações e evidências
+                    acumuladas pelo Nexus.
                 </div>
+
+            </div>
+
+            <div class="map-column">
+
+                <h3>📚 Conhecimento</h3>
+
+                <div class="map-card">
+                    <strong>O que já foi consolidado</strong>
+                    Princípios, protocolos, aprendizados e
+                    referências que permanecem disponíveis
+                    como memória permanente do sistema.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="section">
+
+    <div class="card">
+
+        <strong style="font-size:3rem;display:block;text-align:center;margin-bottom:16px;">
+            ✨
+        </strong>
+
+        <small>PROPÓSITO DO NEXUS</small>
+
+        <h3>
+            Revelar padrões que já estavam presentes.
+        </h3>
+
+        <p>
+            Pensamentos, observações, ideias, dúvidas e descobertas
+            raramente surgem organizados.
+        </p>
+
+        <p>
+            O Nexus existe para capturar esses fragmentos,
+            preservar suas conexões e transformá-los em investigações,
+            hipóteses, insights e decisões mais claras.
+        </p>
+
+        <p>
+            Mais do que uma ferramenta de registro,
+            o Nexus funciona como uma memória viva,
+            capaz de acompanhar a evolução do conhecimento
+            e devolver contexto quando ele mais importa.
+        </p>
+
+        <p>
+            Seu objetivo final é simples:
+            ajudar você a enxergar com clareza aquilo que,
+            muitas vezes, já estava diante dos seus olhos.
+        </p>
+
+        <blockquote style="margin-top:24px;font-style:italic;opacity:.85;">
+            "Transformando fragmentos em clareza."
+        </blockquote>
+
+    </div>
+
+</div>
 
             </div>
 
@@ -387,145 +496,326 @@ TOPBAR
 </section>
     
 
-            <!-- PROJETOS -->
+<!-- INVESTIGAÇÕES -->
 
-            <section id="projetos" class="tab-content">
+<section id="investigacoes" class="tab-content">
 
-                <div class="section">
+    <div class="section">
 
-                    <div class="section-header">
-                        <h2>Projetos Ativos</h2>
-                    </div>
+        <div class="section-header">
+            <h2>🔎 Investigações Ativas</h2>
+            <small>
+                Temas atualmente em observação, análise e construção de entendimento.
+            </small>
+        </div>
 
-                    <div class="grid">
+        <div class="grid">
 
-                        <div class="card">
-                            <small>Projeto</small>
-                            <strong>Guilherme</strong>
-                            <p>Prioridade máxima.</p>
-                        </div>
+            <div class="card">
+                <small>Investigação</small>
+                <strong>Guilherme</strong>
+                <p>
+                    Desenvolvimento, regulação, autonomia e padrões observados ao longo do tempo.
+                </p>
+            </div>
 
-                        <div class="card">
-                            <small>Projeto</small>
-                            <strong>Sistema REDE</strong>
-                            <p>Desenvolvimento contínuo.</p>
-                        </div>
+            <div class="card">
+                <small>Investigação</small>
+                <strong>Produtividade e Procrastinação</strong>
+                <p>
+                    Compreender fatores que favorecem foco, execução e continuidade operacional.
+                </p>
+            </div>
 
-                        <div class="card">
-                            <small>Projeto</small>
-                            <strong>PRISMA</strong>
-                            <p>Estruturação e validação.</p>
-                        </div>
+            <div class="card">
+                <small>Investigação</small>
+                <strong>Autocuidado e Energia</strong>
+                <p>
+                    Relação entre rotina, carga cognitiva, recuperação e capacidade de trabalho.
+                </p>
+            </div>
 
-                        <div class="card">
-                            <small>Projeto</small>
-                            <strong>Vozes Atípicas</strong>
-                            <p>Produção criativa.</p>
-                        </div>
+            <div class="card">
+                <small>Investigação</small>
+                <strong>Projetos Estratégicos</strong>
+                <p>
+                    REDE, PRISMA, Nexus e demais iniciativas acompanhadas pelo ecossistema.
+                </p>
+            </div>
 
-                    </div>
+        </div>
 
-                </div>
+    </div>
 
-            </section>
+</section>
 
-            <!-- CENTRO GUILHERME -->
+<!-- HIPÓTESES -->
 
-            <section id="guilherme" class="tab-content">
+<section id="hipoteses" class="tab-content">
 
-                <div class="section">
+    <div class="section">
 
-                    <div class="section-header">
-                        <h2>Centro Guilherme</h2>
-                    </div>
+        <div class="section-header">
+            <h2>🧩 Hipóteses em Evolução</h2>
 
-                    <div class="grid">
+            <small>
+                Relações, explicações e possibilidades atualmente acompanhadas pelo Nexus.
+            </small>
+        </div>
 
-                        <div class="card">
-                            <small>Estado Atual</small>
-                            <p>Resumo executivo do momento atual.</p>
-                        </div>
+        <div class="grid">
 
-                        <div class="card">
-                            <small>Estratégias Ativas</small>
-                            <ul>
-                                <li>Previsibilidade</li>
-                                <li>Antecipação visual</li>
-                                <li>Validação emocional</li>
-                            </ul>
-                        </div>
+            <div class="card">
 
-                        <div class="card">
-                            <small>Observação</small>
-                            <p>Hipóteses em acompanhamento.</p>
-                        </div>
+                <small>Hipótese</small>
 
-                        <div class="card">
-                            <small>Próximos Eventos</small>
-                            <p>Transições e marcos futuros.</p>
-                        </div>
+                <strong>
+                    Antecipação visual reduz ansiedade
+                </strong>
 
-                    </div>
+                <p>
+                    Confiança: 78%
+                    <br>
+                    14 evidências observadas
+                    <br>
+                    Em monitoramento
+                </p>
 
-                </div>
+            </div>
 
-            </section>
+            <div class="card">
 
-            <!-- DECISÕES -->
+                <small>Hipótese</small>
 
-            <section id="decisoes" class="tab-content">
+                <strong>
+                    Revisões semanais aumentam continuidade
+                </strong>
 
-                <div class="section">
+                <p>
+                    Confiança: 84%
+                    <br>
+                    9 evidências observadas
+                    <br>
+                    Parcialmente validada
+                </p>
 
-                    <div class="section-header">
-                        <h2>Hub de Decisões</h2>
-                    </div>
+            </div>
 
-                    <div class="card">
+            <div class="card">
 
-                        <small>DECISÃO RECENTE</small>
+                <small>Hipótese</small>
 
-                        <strong>Estratégia de antecipação</strong>
+                <strong>
+                    Sobrecarga reduz capacidade decisória
+                </strong>
 
-                        <p>
-                            Contexto: preparação para evento futuro.
-                            <br><br>
-                            Decisão: ampliar recursos visuais.
-                            <br><br>
-                            Resultado observado: redução de ansiedade.
-                        </p>
+                <p>
+                    Confiança: 91%
+                    <br>
+                    Evidências recorrentes
+                    <br>
+                    Próxima de validação
+                </p>
 
-                    </div>
+            </div>
 
-                </div>
+            <div class="card">
 
-            </section>
+                <small>Hipótese</small>
 
-            <!-- BIBLIOTECA -->
+                <strong>
+                    Rotinas previsíveis favorecem autonomia
+                </strong>
 
-            <section id="biblioteca" class="tab-content">
+                <p>
+                    Novas observações pendentes
+                    <br>
+                    Em acompanhamento longitudinal
+                </p>
 
-                <div class="section">
+            </div>
 
-                    <div class="section-header">
-                        <h2>Biblioteca Viva</h2>
-                    </div>
+        </div>
 
-                    <div class="tags">
+    </div>
 
-                        <div class="tag">Ansiedade</div>
-                        <div class="tag">Transições</div>
-                        <div class="tag">Sobrecarga</div>
-                        <div class="tag">Hiperfoco</div>
-                        <div class="tag">Autorregulação</div>
-                        <div class="tag">Resistência</div>
+</section>
 
-                    </div>
+<!-- DECISÕES -->
 
-                </div>
+<section id="decisoes" class="tab-content">
 
-            </section>
+    <div class="section">
 
+        <div class="section-header">
+            <h2>⚖ Decisões</h2>
+
+            <small>
+                Histórico longitudinal de escolhas, justificativas,
+                evidências e aprendizados.
+            </small>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <small>DECISÃO RECENTE</small>
+
+                <strong>
+                    Ampliar recursos de antecipação visual
+                </strong>
+
+                <p>
+                    <strong>Hipótese:</strong>
+                    antecipação reduz ansiedade.
+                    <br><br>
+
+                    <strong>Evidências:</strong>
+                    melhora observada em múltiplas situações.
+                    <br><br>
+
+                    <strong>Status:</strong>
+                    implementada.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>DECISÃO ATIVA</small>
+
+                <strong>
+                    Revisão semanal das investigações
+                </strong>
+
+                <p>
+                    Objetivo:
+                    aumentar continuidade e reduzir dispersão.
+                    <br><br>
+
+                    Revisão prevista para sexta-feira.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>DECISÃO VALIDADA</small>
+
+                <strong>
+                    Centralizar registros no Nexus
+                </strong>
+
+                <p>
+                    Redução da fragmentação entre
+                    papel, WhatsApp e anotações dispersas.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>EM AVALIAÇÃO</small>
+
+                <strong>
+                    Novo protocolo de captura rápida
+                </strong>
+
+                <p>
+                    Aguardando mais observações
+                    para validação da proposta.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- BIBLIOTECA VIVA -->
+
+<section id="biblioteca" class="tab-content">
+
+    <div class="section">
+
+        <div class="section-header">
+            <h2>📚 Biblioteca Viva</h2>
+
+            <small>
+                Conhecimentos, padrões, princípios e referências consolidados ao longo das investigações.
+            </small>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <small>PRINCÍPIO</small>
+
+                <strong>
+                    Previsibilidade reduz sobrecarga
+                </strong>
+
+                <p>
+                    Aprendizado recorrente observado em diferentes contextos
+                    e validado por múltiplas evidências.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>PADRÃO</small>
+
+                <strong>
+                    Revisões frequentes geram continuidade
+                </strong>
+
+                <p>
+                    Investigações revisitadas regularmente tendem
+                    a produzir mais descobertas relevantes.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>PROTOCOLO</small>
+
+                <strong>
+                    Captura sem classificação
+                </strong>
+
+                <p>
+                    Registrar primeiro.
+                    Organizar depois.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>REFERÊNCIA</small>
+
+                <strong>
+                    Regulação e Desenvolvimento
+                </strong>
+
+                <p>
+                    Materiais utilizados como base para análise,
+                    interpretação e tomada de decisão.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 <!-- =========================================================
 AGENDA
 ========================================================= -->
@@ -559,86 +849,150 @@ scrolling="no">
 
 </div>
 
-            <!-- MEMÓRIA -->
+<!-- MEMÓRIA PERMANENTE -->
 
-            <section id="memoria" class="tab-content">
+<section id="memoria" class="tab-content">
 
-                <div class="section">
+    <div class="section">
 
-                    <div class="section-header">
-                        <h2>Memória Operacional</h2>
-                    </div>
+        <div class="section-header">
+            <h2>∞ Memória Permanente</h2>
 
-                    <div class="grid">
+            <small>
+                Conhecimentos, decisões e contextos que devem permanecer acessíveis independentemente do tempo.
+            </small>
 
-                        <div class="card">
-                            <small>Aprendizados</small>
-                            <p>O que funcionou recentemente.</p>
-                        </div>
+        </div>
 
-                        <div class="card">
-                            <small>Mudanças</small>
-                            <p>Alterações observadas.</p>
-                        </div>
+        <div class="grid">
 
-                        <div class="card">
-                            <small>Alertas</small>
-                            <p>Pontos de atenção.</p>
-                        </div>
+            <div class="card">
 
-                        <div class="card">
-                            <small>Hipóteses</small>
-                            <p>Observações em andamento.</p>
-                        </div>
+                <small>🧭 PRINCÍPIOS</small>
 
-                    </div>
+                <p>
+                    Ideias que orientam decisões e investigações,
+                    construídas a partir da experiência acumulada.
+                </p>
 
-                </div>
+            </div>
 
-            </section>
+            <div class="card">
 
-            <!-- GOVERNANÇA -->
+                <small>⚖ DECISÕES HISTÓRICAS</small>
 
-            <section id="governanca" class="tab-content">
+                <p>
+                    Escolhas relevantes que continuam impactando
+                    estratégias, projetos e acompanhamento longitudinal.
+                </p>
 
-                <div class="section">
+            </div>
 
-                    <div class="section-header">
-                        <h2>Governança</h2>
-                        <small>Preparado para integrações • <a href="vital-report1.html">Report 1</a>  •  <a href="vital-report2.html">Report 2</a></small>
-                    </div>
+            <div class="card">
 
-                    <div class="grid">
+                <small>💡 APRENDIZADOS DURADOUROS</small>
 
-                        <div class="card" id="github-projects">
-                            <small>Projects</small>
-                            <strong>12</strong>
-                            <p>Itens ativos</p>
-                        </div>
+                <p>
+                    Descobertas que permaneceram válidas após
+                    múltiplos ciclos de observação e validação.
+                </p>
 
-                        <div class="card" id="github-discussions">
-                            <small>Discussions</small>
-                            <strong>04</strong>
-                            <p>Decisões abertas</p>
-                        </div>
+            </div>
 
-                        <div class="card" id="github-actions">
-                            <small>Actions</small>
-                            <strong>✓</strong>
-                            <p>Última sincronização</p>
-                        </div>
+            <div class="card">
 
-                        <div class="card" id="github-insights">
-                            <small>Insights</small>
-                            <strong>∞</strong>
-                            <p>Inteligência longitudinal</p>
-                        </div>
+                <small>🌌 CONTEXTO PRESERVADO</small>
 
-                    </div>
+                <p>
+                    Registros fundamentais para compreender
+                    a origem de hipóteses, decisões e mudanças.
+                </p>
 
-                </div>
+            </div>
 
-            </section>
+        </div>
+
+    </div>
+
+</section>
+
+    
+ <!-- ESPELHO COGNITIVO -->
+
+<section id="governanca" class="tab-content">
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>🪞 Espelho Cognitivo</h2>
+
+            <small>
+                O que o Nexus está aprendendo sobre seus padrões,
+                investigações e processos de decisão.
+            </small>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <small>✨ INSIGHTS EMERGENTES</small>
+
+                <strong>12</strong>
+
+                <p>
+                    Novos padrões identificados a partir
+                    das observações recentes.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>🧩 HIPÓTESES ATIVAS</small>
+
+                <strong>7</strong>
+
+                <p>
+                    Relações atualmente em investigação
+                    e construção de evidências.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>📈 PADRÕES RECORRENTES</small>
+
+                <strong>4</strong>
+
+                <p>
+                    Comportamentos e fenômenos observados
+                    repetidamente ao longo do tempo.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <small>🌌 CONSTELAÇÕES EM EVOLUÇÃO</small>
+
+                <strong>9</strong>
+
+                <p>
+                    Grandes territórios de investigação
+                    atualmente acompanhados pelo Nexus.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
         </main>
 
