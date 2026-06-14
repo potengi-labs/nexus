@@ -1,0 +1,44 @@
+<div class="grid">
+
+    <div class="card">
+
+        <small>INVESTIGAÇÃO</small>
+
+        <strong>
+            Estrutura Cognitiva Base
+        </strong>
+
+        <p>
+            Define as entidades fundamentais
+            do Nexus e suas relações.
+        </p>
+
+        <button
+            onclick="loadWiki('estrutura-cognitiva')">
+
+            Abrir →
+
+        </button>
+
+    </div>
+
+</div>
+
+<script>async function loadWiki(page){
+
+    const container =
+    document.getElementById(
+        "wikiContainer"
+    );
+
+    const response =
+    await fetch(
+        `assets/wiki/${page}.html`
+    );
+
+    container.innerHTML =
+    await response.text();
+
+}
+
+loadWiki("investigacoes");</script>
