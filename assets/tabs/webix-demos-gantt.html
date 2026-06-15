@@ -18,19 +18,15 @@
 
 <link rel="stylesheet" href="//cdn.webix.com/pro/edge/gantt/gantt.css" type="text/css" media="screen" charset="utf-8">
 <script src="//cdn.webix.com/pro/edge/gantt/gantt.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css" type="text/css"
-  media="screen" charset="utf-8" />
+<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://webix.com/demos/gantt/gantt.css?v" type="text/css" media="screen" charset="utf-8" />
 <script type="text/javascript" src="https://webix.com/demos/gantt/data.js"></script>
 <script>
         webix.ready(function () {
             if (webix.env.touch) webix.ui.fullScreen();
             webix.CustomScroll.init();
-
             webix.Date.startOnMonday = true;
-
             const yearScale = { unit: "year", format: "%Y" };
-
             const quarterScale = {
                 unit: "quarter",
                 format: function (start, end) {
