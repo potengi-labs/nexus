@@ -1,0 +1,161 @@
+<style>
+body {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    height: 520px;
+    min-width: 310px;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+</style>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/tiledwebmap.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
+<div id="container"></div>
+
+<script>
+// centro real: Neópolis / Rua Solon Aranha
+Highcharts.mapChart('container', {
+
+    chart: {
+        margin: 0
+    },
+
+    title: {
+        text: '🌍 Geografia Urbana — Neópolis / Natal-RN (RPG Educativo)'
+    },
+
+    subtitle: {
+        text: 'Exploração geográfica do bairro: Rua Solon Aranha, 1348'
+    },
+
+    mapNavigation: {
+        enabled: true,
+        enableDoubleClickZoom: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    mapView: {
+        // 📍 Centro exato em Natal / Neópolis (aproximado geográfico)
+        center: [-35.2060, -5.8470],
+        zoom: 16
+    },
+
+    tooltip: {
+        useHTML: true,
+        headerFormat: '<div style="font-weight:bold">{series.name}</div><br>',
+        pointFormat: '<div>{point.name}</div>'
+    },
+
+    legend: {
+        enabled: true
+    },
+
+    series: [
+
+    /* 🗺️ BASE MAPA */
+    {
+        type: 'tiledwebmap',
+        name: 'Mapa de Natal (OpenStreetMap)',
+        provider: {
+            type: 'OpenStreetMap',
+            theme: 'Standard'
+        },
+        showInLegend: false
+    },
+
+    /* 🏫 PONTO CENTRAL — ESCOLA / REFERÊNCIA */
+    {
+        type: 'mappoint',
+        name: 'Ponto Central de Estudo',
+        marker: {
+            symbol: 'url(https://www.highcharts.com/samples/graphics/star.svg)',
+            width: 28,
+            height: 28
+        },
+        color: '#1d6aff',
+        data: [{
+            name: '📍 Rua Solon Aranha, 1348 — Centro Educacional',
+            lon: -35.2060,
+            lat: -5.8470
+        }]
+    },
+
+    /* 🏘️ CONTEXTO URBANO — NEÓPOLIS */
+    {
+        type: 'mappoint',
+        name: 'Bairro de Neópolis',
+        marker: {
+            symbol: 'url(https://www.highcharts.com/samples/graphics/tree.svg)',
+            width: 24,
+            height: 24
+        },
+        color: '#00a859',
+        data: [
+            {
+                name: 'Área residencial Neópolis',
+                lon: -35.2082,
+                lat: -5.8485
+            },
+            {
+                name: 'Zona urbana — comércio local',
+                lon: -35.2035,
+                lat: -5.8458
+            }
+        ]
+    },
+
+    /* 🧭 INFRAESTRUTURA URBANA */
+    {
+        type: 'mappoint',
+        name: 'Infraestrutura urbana',
+        marker: {
+            symbol: 'url(https://www.highcharts.com/samples/graphics/building.svg)',
+            width: 24,
+            height: 24
+        },
+        color: '#0d66db',
+        data: [
+            {
+                name: 'Vias principais do bairro',
+                lon: -35.2048,
+                lat: -5.8462
+            },
+            {
+                name: 'Expansão urbana de Natal',
+                lon: -35.2100,
+                lat: -5.8445
+            }
+        ]
+    },
+
+    /* 🌳 ÁREAS VERDES / AMBIENTE */
+    {
+        type: 'mappoint',
+        name: 'Ambiente urbano',
+        marker: {
+            symbol: 'url(https://www.highcharts.com/samples/graphics/tree.svg)',
+            width: 24,
+            height: 24
+        },
+        color: '#2ecc71',
+        data: [
+            {
+                name: 'Vegetação urbana e sombreamento',
+                lon: -35.2070,
+                lat: -5.8468
+            }
+        ]
+    }
+
+    ]
+});
+</script>
