@@ -1,0 +1,411 @@
+<div id="rede-gantt-container">
+
+    <div class="rede-header">
+        <h2>🧠 Sistema REDE • Painel Longitudinal</h2>
+
+        <div class="rede-subtitle">
+            Evolução • Autonomia • Regulação • Rede Terapêutica
+        </div>
+    </div>
+
+    <div id="rede-gantt"></div>
+
+</div>
+
+<style>
+
+#rede-gantt-container{
+    width:100%;
+    height:100%;
+    padding:20px;
+}
+
+.rede-header{
+    margin-bottom:20px;
+}
+
+.rede-header h2{
+    margin:0;
+    font-size:1.6rem;
+}
+
+.rede-subtitle{
+    opacity:.7;
+    margin-top:4px;
+}
+
+#rede-gantt{
+    width:100%;
+    height:900px;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.deadline_marker{
+    background:#ff6b6b;
+}
+
+.webix_gantt_today_marker{
+    background:#00c853;
+}
+
+</style>
+
+<script>
+
+(async function(){
+
+/* =====================================================
+   LOAD LIBS
+===================================================== */
+
+async function loadScript(src){
+
+    return new Promise((resolve,reject)=>{
+
+        if(
+            document.querySelector(
+                `script[src="${src}"]`
+            )
+        ){
+            resolve();
+            return;
+        }
+
+        const s =
+            document.createElement("script");
+
+        s.src = src;
+
+        s.onload = resolve;
+        s.onerror = reject;
+
+        document.head.appendChild(s);
+
+    });
+
+}
+
+async function loadCss(href){
+
+    return new Promise(resolve=>{
+
+        if(
+            document.querySelector(
+                `link[href="${href}"]`
+            )
+        ){
+            resolve();
+            return;
+        }
+
+        const l =
+            document.createElement("link");
+
+        l.rel="stylesheet";
+        l.href=href;
+
+        l.onload=resolve;
+
+        document.head.appendChild(l);
+
+    });
+
+}
+
+await loadCss(
+"//cdn.webix.com/site/webix.css"
+);
+
+await loadCss(
+"//cdn.webix.com/pro/edge/gantt/gantt.css"
+);
+
+await loadScript(
+"//cdn.webix.com/site/webix.js"
+);
+
+await loadScript(
+"//cdn.webix.com/pro/edge/gantt/gantt.js"
+);
+
+/* =====================================================
+   DATASET LUCAS
+===================================================== */
+
+const tasks = [
+
+{
+    id:1,
+    text:"Sistema REDE",
+    type:"project",
+    start_date:"2025-10-01",
+    duration:600,
+    progress:.75,
+    open:true
+},
+
+{
+    id:10,
+    parent:1,
+    text:"MAD • Rotinas Domésticas",
+    start_date:"2025-10-01",
+    duration:600,
+    progress:.90
+},
+
+{
+    id:11,
+    parent:10,
+    text:"Monitoramento Diário",
+    start_date:"2025-10-01",
+    duration:600,
+    progress:.95
+},
+
+{
+    id:20,
+    parent:1,
+    text:"MAP • Atividades Programáticas",
+    start_date:"2025-11-01",
+    duration:500,
+    progress:.70
+},
+
+{
+    id:21,
+    parent:20,
+    text:"Ampliação de Repertório",
+    start_date:"2026-01-01",
+    duration:365,
+    progress:.60
+},
+
+{
+    id:30,
+    parent:1,
+    text:"RAI • Gestão de Riscos",
+    start_date:"2025-11-10",
+    duration:450,
+    progress:.85
+},
+
+{
+    id:31,
+    parent:30,
+    text:"ALERTA001 • Rafael",
+    start_date:"2025-11-10",
+    duration:15,
+    progress:1
+},
+
+{
+    id:32,
+    parent:30,
+    text:"TRIGGER002 • Agenda",
+    start_date:"2025-11-24",
+    duration:20,
+    progress:1
+},
+
+{
+    id:33,
+    parent:30,
+    text:"TRIGGER003 • Natal",
+    start_date:"2025-12-14",
+    duration:25,
+    progress:1
+},
+
+{
+    id:34,
+    parent:30,
+    text:"TRIGGER004 • Carnaval",
+    start_date:"2026-01-15",
+    duration:40,
+    progress:1
+},
+
+{
+    id:40,
+    parent:1,
+    text:"Calendário 2026",
+    start_date:"2025-12-01",
+    duration:365,
+    progress:.85
+},
+
+{
+    id:50,
+    parent:1,
+    text:"Autonomia e Responsabilidade",
+    start_date:"2026-01-01",
+    duration:365,
+    progress:.65
+},
+
+{
+    id:60,
+    parent:1,
+    text:"Rede Terapêutica",
+    start_date:"2026-03-16",
+    duration:300,
+    progress:.45
+}
+
+];
+
+const links = [];
+const resources = [];
+const assignments = [];
+const categories = [];
+
+/* =====================================================
+   BACKEND
+===================================================== */
+
+class NexusBackend
+extends gantt.services.Backend{
+
+    tasks(){
+        return webix.promise.resolve(tasks);
+    }
+
+    links(){
+        return webix.promise.resolve(links);
+    }
+
+    resources(){
+        return webix.promise.resolve(resources);
+    }
+
+    assignments(){
+        return webix.promise.resolve(assignments);
+    }
+
+    categories(){
+        return webix.promise.resolve(categories);
+    }
+
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+
+webix.ready(function(){
+
+    webix.Date.startOnMonday=true;
+
+    webix.ui({
+
+        container:"rede-gantt",
+
+        rows:[
+
+        {
+            view:"toolbar",
+            height:50,
+
+            elements:[
+
+                {
+                    view:"label",
+                    label:
+                    "Sistema REDE • Longitudinal"
+                },
+
+                {},
+
+                {
+                    view:"checkbox",
+                    labelRight:"MAD",
+                    value:1
+                },
+
+                {
+                    view:"checkbox",
+                    labelRight:"MAP",
+                    value:1
+                },
+
+                {
+                    view:"checkbox",
+                    labelRight:"RAI",
+                    value:1
+                },
+
+                {
+                    view:"checkbox",
+                    labelRight:"Calendário 2026",
+                    value:1
+                },
+
+                {
+                    view:"checkbox",
+                    labelRight:"Rede Terapêutica",
+                    value:1
+                }
+
+            ]
+        },
+
+        {
+            view:"gantt",
+
+            id:"redeGantt",
+
+            override:new Map([
+                [
+                    gantt.services.Backend,
+                    NexusBackend
+                ]
+            ]),
+
+            scale:"month",
+
+            treeWidth:500,
+
+            resources:false,
+
+            markers:[
+
+            {
+                text:"Hoje",
+                now:true,
+                css:"webix_gantt_today_marker"
+            },
+
+            {
+                text:"ALERTA001",
+                start_date:
+                new Date(2025,10,14),
+                css:"deadline_marker"
+            },
+
+            {
+                text:"Natal",
+                start_date:
+                new Date(2025,11,25),
+                css:"deadline_marker"
+            },
+
+            {
+                text:"Carnaval",
+                start_date:
+                new Date(2026,1,17),
+                css:"deadline_marker"
+            }
+
+            ]
+
+        }
+
+        ]
+
+    });
+
+});
+
+})();
+</script>
