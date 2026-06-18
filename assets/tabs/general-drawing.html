@@ -1,0 +1,436 @@
+<div class="insights-container">
+
+    <figure class="highcharts-figure">
+        <div id="insightsFlowChart"></div>
+
+        <p class="highcharts-description">
+            Fluxo cognitivo do Sistema REDE. Os registros observacionais
+            evoluem de fragmentos para investigações, hipóteses,
+            insights, decisões programáticas e memória permanente,
+            alimentando continuamente o Plano Programático.
+        </p>
+    </figure>
+
+</div>
+
+<style>
+
+.insights-container{
+    width:100%;
+    padding:20px;
+}
+
+#insightsFlowChart{
+    width:100%;
+    height:420px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.highcharts-figure{
+    margin:0;
+}
+
+.highcharts-description{
+    margin-top:20px;
+    padding:12px 18px;
+    border-left:4px solid #3b82f6;
+    background:#f8fafc;
+    border-radius:8px;
+    font-size:.9rem;
+    line-height:1.6;
+}
+
+</style>
+
+<script>
+
+(async function(){
+
+    function loadScript(src){
+
+        return new Promise(resolve=>{
+
+            if(
+                document.querySelector(
+                    `script[src="${src}"]`
+                )
+            ){
+                resolve();
+                return;
+            }
+
+            const script =
+                document.createElement("script");
+
+            script.src = src;
+
+            script.onload = resolve;
+
+            document.head.appendChild(script);
+
+        });
+
+    }
+
+    await loadScript(
+        "https://code.highcharts.com/highcharts.js"
+    );
+
+    await loadScript(
+        "https://code.highcharts.com/modules/exporting.js"
+    );
+
+    await loadScript(
+        "https://code.highcharts.com/modules/accessibility.js"
+    );
+
+    Highcharts.chart('insightsFlowChart', {
+
+        chart:{
+            backgroundColor:'transparent',
+
+            style:{
+                fontFamily:'Inter, sans-serif'
+            },
+
+            events:{
+
+                load:function(){
+
+                    const ren =
+                        this.renderer;
+
+                    const colors =
+                        Highcharts.getOptions().colors;
+
+                    const rightArrow = [
+                        'M',0,0,
+                        'L',100,0,
+                        'L',95,5,
+                        'M',100,0,
+                        'L',95,-5
+                    ];
+
+                    /* separadores */
+
+                    ren.path([
+                        'M',180,40,
+                        'L',180,350
+                    ])
+                    .attr({
+                        stroke:'#cbd5e1',
+                        'stroke-width':2,
+                        dashstyle:'dash'
+                    })
+                    .add();
+
+                    ren.path([
+                        'M',500,40,
+                        'L',500,350
+                    ])
+                    .attr({
+                        stroke:'#cbd5e1',
+                        'stroke-width':2,
+                        dashstyle:'dash'
+                    })
+                    .add();
+
+                    /* títulos */
+
+                    ren.label(
+                        'CAPTURA',
+                        40,
+                        40
+                    )
+                    .css({
+                        fontWeight:'bold',
+                        fontSize:'14px'
+                    })
+                    .add();
+
+                    ren.label(
+                        'PROCESSAMENTO',
+                        280,
+                        40
+                    )
+                    .css({
+                        fontWeight:'bold',
+                        fontSize:'14px'
+                    })
+                    .add();
+
+                    ren.label(
+                        'MEMÓRIA',
+                        620,
+                        40
+                    )
+                    .css({
+                        fontWeight:'bold',
+                        fontSize:'14px'
+                    })
+                    .add();
+
+                    /* FRAGMENTOS */
+
+                    ren.label(
+                        '⭐ Fragmentos<br/>Observações<br/>Eventos',
+                        20,
+                        90
+                    )
+                    .attr({
+                        fill:'#2563eb',
+                        padding:10,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff'
+                    })
+                    .add()
+                    .shadow(true);
+
+                    ren.path(rightArrow)
+                    .attr({
+                        stroke:'#2563eb',
+                        'stroke-width':2
+                    })
+                    .translate(
+                        130,
+                        125
+                    )
+                    .add();
+
+                    ren.label(
+                        'Coleta',
+                        195,
+                        112
+                    )
+                    .css({
+                        color:'#2563eb'
+                    })
+                    .add();
+
+                    /* INVESTIGAÇÕES */
+
+                    ren.label(
+                        '🔎 Investigações',
+                        250,
+                        110
+                    )
+                    .attr({
+                        fill:'#7c3aed',
+                        width:150,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff',
+                        fontWeight:'bold'
+                    })
+                    .add();
+
+                    ren.path([
+                        'M',325,145,
+                        'L',325,210
+                    ])
+                    .attr({
+                        stroke:'#7c3aed',
+                        'stroke-width':2
+                    })
+                    .add();
+
+                    ren.label(
+                        'Hipóteses',
+                        335,
+                        170
+                    )
+                    .css({
+                        color:'#7c3aed'
+                    })
+                    .add();
+
+                    /* HIPÓTESES */
+
+                    ren.label(
+                        '🧩 Hipóteses',
+                        250,
+                        225
+                    )
+                    .attr({
+                        fill:'#9333ea',
+                        width:150,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff',
+                        fontWeight:'bold'
+                    })
+                    .add();
+
+                    ren.path([
+                        'M',325,260,
+                        'L',325,320
+                    ])
+                    .attr({
+                        stroke:'#9333ea',
+                        'stroke-width':2
+                    })
+                    .add();
+
+                    ren.label(
+                        'Validação',
+                        335,
+                        285
+                    )
+                    .css({
+                        color:'#9333ea'
+                    })
+                    .add();
+
+                    /* INSIGHTS */
+
+                    ren.label(
+                        '💡 Insights',
+                        250,
+                        335
+                    )
+                    .attr({
+                        fill:'#f59e0b',
+                        width:150,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff',
+                        fontWeight:'bold'
+                    })
+                    .add();
+
+                    /* MAD MAP RAI */
+
+                    ren.label(
+                        'MAD<br/>MAP<br/>RAI',
+                        20,
+                        250
+                    )
+                    .attr({
+                        fill:'#10b981',
+                        padding:10,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff'
+                    })
+                    .add();
+
+                    ren.path(rightArrow)
+                    .attr({
+                        stroke:'#10b981',
+                        'stroke-width':2
+                    })
+                    .translate(
+                        130,
+                        285
+                    )
+                    .add();
+
+                    ren.label(
+                        'Indicadores',
+                        185,
+                        270
+                    )
+                    .css({
+                        color:'#10b981'
+                    })
+                    .add();
+
+                    /* DECISÕES */
+
+                    ren.label(
+                        '📜 Decisões',
+                        570,
+                        130
+                    )
+                    .attr({
+                        fill:'#ef4444',
+                        width:170,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff',
+                        fontWeight:'bold'
+                    })
+                    .add();
+
+                    ren.path([
+                        'M',470,355,
+                        'L',550,355,
+                        'L',550,165
+                    ])
+                    .attr({
+                        stroke:'#ef4444',
+                        'stroke-width':2
+                    })
+                    .add();
+
+                    /* MEMÓRIA */
+
+                    ren.label(
+                        '∞ Memória<br/>Permanente',
+                        570,
+                        260
+                    )
+                    .attr({
+                        fill:'#0f172a',
+                        padding:10,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff'
+                    })
+                    .add();
+
+                    ren.path([
+                        'M',655,180,
+                        'L',655,250
+                    ])
+                    .attr({
+                        stroke:'#0f172a',
+                        'stroke-width':2
+                    })
+                    .add();
+
+                    /* PLANO PROGRAMÁTICO */
+
+                    ren.label(
+                        'Plano Programático 2026',
+                        520,
+                        355
+                    )
+                    .attr({
+                        fill:'#0891b2',
+                        width:220,
+                        r:8
+                    })
+                    .css({
+                        color:'#fff',
+                        fontWeight:'bold'
+                    })
+                    .add();
+
+                }
+            }
+        },
+
+        title:{
+            text:'Sistema REDE • Fluxo Cognitivo e Programático',
+            align:'left'
+        },
+
+        accessibility:{
+            typeDescription:'Fluxograma'
+        }
+
+    });
+
+})();
+
+</script>
