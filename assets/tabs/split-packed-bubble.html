@@ -48,7 +48,8 @@ Highcharts.chart('container', {
 
     chart:{
         type:'packedbubble',
-        height:'85%'
+        height:850,
+        spacing:[30,30,30,30]
     },
 
     title:{
@@ -78,21 +79,29 @@ Highcharts.chart('container', {
 
         packedbubble:{
 
-            minSize:'25%',
-            maxSize:'120%',
+            minSize:'10%',
+            maxSize:'55%',
 
             zMin:0,
             zMax:100,
 
-            layoutAlgorithm:{
-                splitSeries:true,
-                gravitationalConstant:0.02,
-                parentNodeLimit:true
+        layoutAlgorithm:{
+            splitSeries:true,
+            parentNodeLimit:false,
+            dragBetweenSeries:false,
+            seriesInteraction:false,
+            gravitationalConstant:0.005,
+            bubblePadding:10
             },
 
             dataLabels:{
                 enabled:true,
                 format:'{point.name}',
+                    filter:{
+                    property:'value',
+                    operator:'>',
+                    value:80
+                    },
                 style:{
                     color:'#ffffff',
                     textOutline:'none',
