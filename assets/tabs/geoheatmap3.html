@@ -1,0 +1,146 @@
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f7f9fc;
+    color: #1b1f2a;
+}
+
+.highcharts-figure {
+    margin: 0 auto;
+    min-width: 310px;
+    max-width: 900px;
+}
+
+#container {
+    height: 600px;
+}
+
+.highcharts-description {
+    background: #eef3f8;
+    border-left: 4px solid #1d6aff;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    margin: 2em 10px 1em;
+    border-radius: 6px;
+    line-height: 1.5;
+}
+</style>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/geoheatmap.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+    <p class="highcharts-description">
+        Este mapa interativo é utilizado em aulas de Geografia para estudar a <b>distribuição da população mundial</b>.
+        <br><br>
+        Cada ponto representa a localização de cidades ao redor do mundo, permitindo analisar padrões como:
+        <ul>
+            <li>Concentração populacional em áreas urbanas</li>
+            <li>Diferenças entre hemisfério norte e sul</li>
+            <li>Influência de clima, economia e relevo na ocupação humana</li>
+        </ul>
+
+        A intensidade das cores representa a densidade de cidades, ajudando o aluno a visualizar a urbanização global.
+    </p>
+</figure>
+
+<script>
+(async () => {
+
+    const topology = await fetch(
+        'https://code.highcharts.com/mapdata/custom/world.topo.json'
+    ).then(r => r.json());
+
+    const data = await fetch(
+        'https://cdn.jsdelivr.net/gh/highcharts/highcharts@5c536debb0/samples/data/geoheatmap-cities-dataset.json'
+    ).then(r => r.json());
+
+    Highcharts.mapChart('container', {
+
+        chart: {
+            map: topology
+        },
+
+        title: {
+            text: '🌍 Geografia: Distribuição da População Urbana no Mundo',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'Ferramenta educacional para análise de urbanização e densidade populacional global',
+            align: 'left'
+        },
+
+        legend: {
+            enabled: true
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        mapView: {
+            maxZoom: 30,
+            projection: {
+                name: 'Orthographic',
+                rotation: [-20, -20]
+            }
+        },
+
+        colorAxis: {
+            dataClasses: [
+                {
+                    to: 100,
+                    color: 'rgba(33, 150, 83, 0.25)'
+                },
+                {
+                    from: 100,
+                    to: 1000,
+                    color: 'rgba(76, 175, 80, 0.35)'
+                },
+                {
+                    from: 1000,
+                    to: 5000,
+                    color: 'rgba(255, 152, 0, 0.35)'
+                },
+                {
+                    from: 5000,
+                    color: 'rgba(244, 67, 54, 0.35)'
+                }
+            ]
+        },
+
+        series: [
+            {
+                name: 'Mapa Base Mundial',
+                states: {
+                    inactive: {
+                        enabled: false
+                    }
+                },
+                accessibility: {
+                    exposeAsGroupOnly: true
+                }
+            },
+            {
+                name: 'Distribuição Urbana (GeoHeatMap)',
+                type: 'geoheatmap',
+                borderWidth: 1,
+                borderColor: 'rgba(0,0,0,0.08)',
+                colsize: 10,
+                rowsize: 10,
+                data
+            }
+        ]
+    });
+
+})();
+</script>
