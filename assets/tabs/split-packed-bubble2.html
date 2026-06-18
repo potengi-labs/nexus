@@ -179,31 +179,54 @@ Highcharts.chart('container', {
         enabled:true
     },
 
-    tooltip: {
-        useHTML: true,
+tooltip: {
+    useHTML: true,
+    outside: false,
 
-        pointFormatter: function () {
+    style: {
+        width: '320px'
+    },
 
-            return `
+    pointFormatter: function () {
+
+        return `
+        <div style="
+            width:280px;
+            max-width:280px;
+            white-space:normal;
+            word-wrap:break-word;
+            line-height:1.5;
+            padding:12px;
+        ">
+
             <div style="
-                padding:12px;
-                max-width:260px;
+                font-size:15px;
+                font-weight:700;
+                margin-bottom:8px;
+                color:#111827;
             ">
-                <strong style="font-size:15px">
-                    ${this.name}
-                </strong>
-                <br><br>
+                ${this.name}
+            </div>
 
-                <strong>Prioridade:</strong>
-                ${this.value}/5
+            <div style="
+                font-size:13px;
+                margin-bottom:10px;
+                color:#4B5563;
+            ">
+                Prioridade: <strong>${this.value}/5</strong>
+            </div>
 
-                <br><br>
-
+            <div style="
+                font-size:13px;
+                color:#374151;
+            ">
                 ${this.desc}
             </div>
-            `;
-        }
-    },
+
+        </div>
+        `;
+    }
+},
 
     colors:[
         '#3B82F6',
