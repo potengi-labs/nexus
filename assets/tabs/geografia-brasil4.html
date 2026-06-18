@@ -1,307 +1,153 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-<meta charset="UTF-8" />
-<title>GeoRPG LMS - Plataforma Escolar</title>
+<meta charset="utf-8" />
+<title>GeoRPG SaaS</title>
 
-<script src="https://code.highcharts.com/maps/highmaps.js"></script>
-<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_KEY"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { getAuth, signInAnonymously } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* 🔥 CONFIG FIREBASE */
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_BUCKET",
+  messagingSenderId: "ID",
+  appId: "APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+/* login simples aluno */
+await signInAnonymously(auth);
+
+/* 👤 usuário atual */
+let userId = null;
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        userId = user.uid;
+        initUser();
+    }
+});
+
+/* 🧑‍🎓 cria aluno no banco */
+async function initUser() {
+    const ref = doc(db, "students", userId);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+        await setDoc(ref, {
+            xp: 0,
+            level: 1,
+            name: "Explorador"
+        });
+    }
+
+    loadUser();
+}
+
+/* 📊 carregar dados */
+async function loadUser() {
+    const ref = doc(db, "students", userId);
+    const snap = await getDoc(ref);
+
+    const data = snap.data();
+
+    document.getElementById("xp").innerText = data.xp;
+    document.getElementById("level").innerText = data.level;
+}
+
+/* ⭐ adicionar XP */
+window.addXP = async function(amount) {
+    const ref = doc(db, "students", userId);
+    const snap = await getDoc(ref);
+
+    let xp = snap.data().xp + amount;
+    let level = Math.floor(xp / 50) + 1;
+
+    await updateDoc(ref, { xp, level });
+
+    loadUser();
+}
+
+/* 🗺️ GOOGLE MAPS */
+window.initMap = function () {
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -14.2350, lng: -51.9253 },
+        zoom: 4
+    });
+
+    /* exemplo de missões */
+    const locations = [
+        {
+            name: "Amazônia",
+            pos: { lat: -3, lng: -60 },
+            xp: 15,
+            question: "A Amazônia é o maior bioma do Brasil?"
+        },
+        {
+            name: "São Paulo",
+            pos: { lat: -23.5, lng: -46.6 },
+            xp: 10,
+            question: "São Paulo é um centro industrial?"
+        }
+    ];
+
+    locations.forEach(loc => {
+
+        const marker = new google.maps.Marker({
+            position: loc.pos,
+            map,
+            title: loc.name
+        });
+
+        marker.addListener("click", () => {
+            const answer = confirm(loc.question + "\n\nClique em OK para responder corretamente.");
+
+            if (answer) {
+                addXP(loc.xp);
+                alert("✔ Missão concluída +" + loc.xp + " XP");
+            }
+        });
+    });
+};
+
+window.onload = initMap;
+</script>
 
 <style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #ffffff;
-    color: #1a1a1a;
+body { margin:0; font-family:Arial; }
+#top {
+    padding:10px;
+    background:#f5f5f5;
+    display:flex;
+    justify-content:space-between;
 }
-
-/* TOP BAR */
-#topbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-bottom: 1px solid #e6e6e6;
-    background: #f9fbff;
-}
-
-button {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-.primary { background: #1d6aff; color: white; }
-.secondary { background: #eee; }
-
-/* HUD aluno */
-#hud {
-    position: fixed;
-    top: 60px;
-    left: 12px;
-    background: #f7f9fc;
-    border: 1px solid #ddd;
-    padding: 12px;
-    border-radius: 10px;
-    width: 220px;
-}
-
-#xpBar {
-    height: 8px;
-    background: #e6e9ef;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 6px;
-}
-
-#xpFill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg,#4facfe,#00f2fe);
-}
-
-/* MAPA */
-#container {
-    height: 100vh;
-}
-
-/* PAINEL QUIZ */
-#panel {
-    position: fixed;
-    right: 14px;
-    top: 60px;
-    width: 320px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 14px;
-    display: none;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-}
-
-.quizBox {
-    margin-top: 10px;
-    padding: 10px;
-    background: #f6f9ff;
-    border-radius: 8px;
-}
-
-/* PAINEL PROFESSOR */
-#teacherPanel {
-    position: fixed;
-    right: 14px;
-    bottom: 14px;
-    width: 320px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px;
-    display: none;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-}
-
-.studentRow {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    font-size: 13px;
-    border-bottom: 1px solid #f0f0f0;
-}
+#map { height: 90vh; }
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div id="topbar">
-    <div>🎓 GeoRPG LMS — Geografia do Brasil</div>
-    <div>
-        <button class="primary" onclick="toggleMode()">Alternar Modo</button>
-        <button class="secondary" onclick="resetData()">Reset</button>
-    </div>
-</div>
-
-<!-- HUD aluno -->
-<div id="hud">
-    🧑 Aluno: Explorador<br>
-    ⭐ XP: <span id="xp">0</span><br>
+<div id="top">
+    🧭 GeoRPG SaaS
+    ⭐ XP: <span id="xp">0</span>
     🏅 Nível: <span id="level">1</span>
-    <div id="xpBar"><div id="xpFill"></div></div>
 </div>
 
-<!-- painel quiz -->
-<div id="panel">
-    <h3 id="stateName">Estado</h3>
-    <div id="info"></div>
-
-    <div class="quizBox">
-        <strong>🧠 Quiz:</strong><br>
-        <span id="question"></span><br><br>
-        <button onclick="answer(true)">✔ Responder</button>
-        <button onclick="answer(false)">❌ Pular</button>
-    </div>
-</div>
-
-<!-- painel professor -->
-<div id="teacherPanel">
-    <strong>👨‍🏫 Painel do Professor</strong>
-    <div id="students"></div>
-</div>
-
-<div id="container"></div>
-
-<script>
-(async () => {
-
-const topology = await fetch(
-    "https://code.highcharts.com/mapdata/countries/br/br-all.topo.json"
-).then(r => r.json());
-
-const data = {
-    "br-sp": { name:"São Paulo", xp:10, q:"SP é o estado mais populoso do Brasil?" },
-    "br-am": { name:"Amazonas", xp:15, q:"Amazonas pertence ao bioma Amazônia?" },
-    "br-ba": { name:"Bahia", xp:10, q:"Bahia fica no Nordeste?" },
-    "br-df": { name:"Distrito Federal", xp:15, q:"Brasília é capital do Brasil?" },
-    "br-rj": { name:"Rio de Janeiro", xp:10, q:"RJ já foi capital do Brasil?" }
-};
-
-// 📦 simulação de banco (turma)
-let db = JSON.parse(localStorage.getItem("geoRPG")) || {
-    xp: 0,
-    level: 1,
-    students: {
-        "Aluno 1": { xp: 20 },
-        "Aluno 2": { xp: 35 },
-        "Aluno 3": { xp: 10 }
-    }
-};
-
-let currentState = null;
-let mode = "student";
-
-function save() {
-    localStorage.setItem("geoRPG", JSON.stringify(db));
-}
-
-function updateHUD() {
-    document.getElementById("xp").innerText = db.xp;
-    document.getElementById("level").innerText = db.level;
-    document.getElementById("xpFill").style.width = Math.min(db.xp, 100) + "%";
-}
-
-function levelUp() {
-    if (db.xp >= db.level * 50) {
-        db.level++;
-        alert("🏆 Level up!");
-    }
-}
-
-function openPanel(key) {
-    currentState = key;
-    const s = data[key];
-
-    document.getElementById("panel").style.display = "block";
-    document.getElementById("stateName").innerText = s.name;
-    document.getElementById("info").innerText = "Exploração geográfica em andamento...";
-    document.getElementById("question").innerText = s.q;
-}
-
-window.answer = function(ok) {
-    if (!currentState) return;
-    const s = data[currentState];
-
-    if (ok) {
-        db.xp += s.xp;
-        levelUp();
-        save();
-        updateHUD();
-        alert("✔ Missão concluída +" + s.xp + " XP");
-    } else {
-        alert("❌ Missão ignorada");
-    }
-}
-
-function renderTeacher() {
-    const box = document.getElementById("students");
-    box.innerHTML = "";
-
-    Object.entries(db.students).forEach(([name, v]) => {
-        const div = document.createElement("div");
-        div.className = "studentRow";
-        div.innerHTML = `<span>${name}</span><span>⭐ ${v.xp}</span>`;
-        box.appendChild(div);
-    });
-}
-
-window.toggleMode = function() {
-    mode = mode === "student" ? "teacher" : "student";
-
-    document.getElementById("teacherPanel").style.display =
-        mode === "teacher" ? "block" : "none";
-
-    alert("Modo: " + mode);
-
-    if (mode === "teacher") renderTeacher();
-}
-
-window.resetData = function() {
-    localStorage.removeItem("geoRPG");
-    location.reload();
-}
-
-Highcharts.mapChart('container', {
-
-    chart: {
-        map: topology,
-        backgroundColor: "#ffffff"
-    },
-
-    title: {
-        text: "🌎 GeoRPG LMS — Geografia do Brasil"
-    },
-
-    subtitle: {
-        text: "Clique nos estados para missões educacionais"
-    },
-
-    mapNavigation: {
-        enabled: true
-    },
-
-    series: [{
-        name: "Brasil",
-        data: Object.keys(data).map(k => ({
-            "hc-key": k,
-            value: data[k].xp
-        })),
-
-        states: {
-            hover: {
-                color: "#d9ecff"
-            }
-        },
-
-        dataLabels: {
-            enabled: true,
-            style: { color: "#333" }
-        },
-
-        point: {
-            events: {
-                click: function () {
-                    const key = this["hc-key"];
-                    if (data[key]) openPanel(key);
-                }
-            }
-        }
-    }]
-});
-
-updateHUD();
-renderTeacher();
-
-})();
-</script>
+<div id="map"></div>
 
 </body>
 </html>
