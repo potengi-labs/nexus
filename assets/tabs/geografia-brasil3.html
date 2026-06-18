@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<title>RPG Geografia do Brasil</title>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+/* HUD educacional */
+#hud {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    background: #f7f9fc;
+    border: 1px solid #d0d7e2;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+#xpBar {
+    width: 200px;
+    height: 8px;
+    background: #e6e9ef;
+    border-radius: 5px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+#xpFill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#4facfe,#00f2fe);
+}
+
+/* mapa */
+#container {
+    height: 100vh;
+    width: 100%;
+}
+
+/* painel educacional */
+#panel {
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    width: 320px;
+    background: #ffffff;
+    border: 1px solid #dfe6ee;
+    border-radius: 12px;
+    padding: 16px;
+    display: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+#panel h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #1d6aff;
+}
+
+.quiz {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f6f9ff;
+    border-radius: 8px;
+}
+
+button {
+    margin-top: 6px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #1d6aff;
+    color: white;
+}
+
+button:hover {
+    background: #004fd1;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HUD -->
+<div id="hud">
+    🧭 Explorador do Brasil<br>
+    ⭐ XP: <span id="xp">0</span><br>
+    🏅 Nível: <span id="level">1</span>
+    <div id="xpBar"><div id="xpFill"></div></div>
+</div>
+
+<!-- painel -->
+<div id="panel">
+    <h2 id="stateName">Estado</h2>
+    <div id="info"></div>
+
+    <div class="quiz">
+        <strong>🧠 Missão:</strong><br>
+        <span id="question"></span><br>
+        <button onclick="answer(true)">✔ Responder</button>
+        <button onclick="answer(false)">❌ Pular</button>
+    </div>
+</div>
+
+<div id="container"></div>
+
+<script>
+(async () => {
+
+const topology = await fetch(
+    "https://code.highcharts.com/mapdata/countries/br/br-all.topo.json"
+).then(r => r.json());
+
+// 📚 Base educacional
+const data = {
+    "br-sp": {
+        name: "São Paulo",
+        info: "Maior centro econômico do Brasil.",
+        question: "São Paulo é o estado mais populoso do Brasil?",
+        xp: 10
+    },
+    "br-am": {
+        name: "Amazonas",
+        info: "Abriga a maior floresta tropical do mundo.",
+        question: "O Amazonas faz parte do bioma Amazônia?",
+        xp: 15
+    },
+    "br-ba": {
+        name: "Bahia",
+        info: "Grande influência cultural afro-brasileira.",
+        question: "A Bahia fica na região Nordeste?",
+        xp: 10
+    },
+    "br-df": {
+        name: "Distrito Federal",
+        info: "Sede do governo brasileiro.",
+        question: "Brasília é a capital do Brasil?",
+        xp: 15
+    }
+};
+
+let xp = 0;
+let level = 1;
+let currentXP = 0;
+
+let currentState = null;
+
+function updateHUD() {
+    document.getElementById("xp").innerText = xp;
+    document.getElementById("level").innerText = level;
+    document.getElementById("xpFill").style.width = Math.min(xp, 100) + "%";
+}
+
+function addXP(value) {
+    xp += value;
+    currentXP += value;
+
+    if (currentXP >= 50) {
+        level++;
+        currentXP = 0;
+        alert("🎉 Você subiu de nível!");
+    }
+
+    updateHUD();
+}
+
+function openPanel(stateKey) {
+    const state = data[stateKey];
+    currentState = stateKey;
+
+    document.getElementById("panel").style.display = "block";
+    document.getElementById("stateName").innerText = state.name;
+    document.getElementById("info").innerText = state.info;
+    document.getElementById("question").innerText = state.question;
+}
+
+window.answer = function(correct) {
+    if (!currentState) return;
+
+    const state = data[currentState];
+
+    if (correct) {
+        addXP(state.xp);
+        alert("✔ Resposta correta! +" + state.xp + " XP");
+    } else {
+        alert("❌ Missão ignorada.");
+    }
+}
+
+Highcharts.mapChart('container', {
+
+    chart: {
+        map: topology,
+        backgroundColor: "#ffffff"
+    },
+
+    title: {
+        text: "🌎 RPG Educacional — Geografia do Brasil"
+    },
+
+    subtitle: {
+        text: "Clique nos estados e complete missões geográficas"
+    },
+
+    mapNavigation: {
+        enabled: true
+    },
+
+    series: [{
+        name: "Brasil",
+        data: Object.keys(data).map(k => ({
+            "hc-key": k,
+            value: data[k].xp
+        })),
+
+        states: {
+            hover: {
+                color: "#cfe8ff"
+            }
+        },
+
+        dataLabels: {
+            enabled: true,
+            style: {
+                color: "#333"
+            }
+        },
+
+        point: {
+            events: {
+                click: function () {
+                    const key = this["hc-key"];
+                    if (data[key]) {
+                        openPanel(key);
+                    } else {
+                        alert("Estado ainda não desbloqueado na jornada.");
+                    }
+                }
+            }
+        }
+    }]
+});
+
+updateHUD();
+
+})();
+</script>
+
+</body>
+</html>
