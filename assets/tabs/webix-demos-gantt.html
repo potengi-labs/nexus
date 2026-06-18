@@ -1,0 +1,508 @@
+<html>
+    <body>
+	<link rel="stylesheet" href="//cdn.webix.com/site/webix.css" type="text/css" media="screen" charset="utf-8">
+	
+	<script src="//cdn.webix.com/site/webix.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="assets/js/nexus-gantt-swiper11-bundle.min.js"></script>
+	<script type="text/javascript" src="assets/js/nexus-gantt-nav.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/js/nexus-gantt-nav.css">
+	<link href="assets/img/favicon.ico" rel="shortcut icon" />
+<link rel="stylesheet" href="//cdn.webix.com/pro/edge/gantt/gantt.css" type="text/css" media="screen" charset="utf-8">
+<script src="//cdn.webix.com/pro/edge/gantt/gantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="assets/js/nexus-gantt.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="assets/js/nexus-gantt-data.js"></script>
+<script>
+        webix.ready(function () {
+            if (webix.env.touch) webix.ui.fullScreen();
+            webix.CustomScroll.init();
+            webix.Date.startOnMonday = true;
+            const yearScale = { unit: "year", format: "%Y" };
+            const quarterScale = {
+                unit: "quarter",
+                format: function (start, end) {
+                    const month = start.getMonth();
+                    const quarter = Math.floor(month / 3) + 1;
+                    return "Q" + quarter;
+                },
+            };
+
+            const monthScale = { unit: "month", format: "%M" };
+
+            function getWeekScale(isWeekTop) {
+                return {
+                    unit: "week",
+                    format: function (start) {
+                        const parser = isWeekTop ? webix.Date.dateToStr("%d %M") : webix.Date.dateToStr("%d");
+                        const wstart = webix.Date.weekStart(start);
+                        const wend = webix.Date.add(
+                            webix.Date.add(wstart, 1, "week", true),
+                            -1,
+                            "day",
+                            true
+                        );
+                        return parser(wstart) + " - " + parser(wend);
+                    },
+                }
+            }
+
+            const hourScale = { unit: "hour", format: "%H:00" };
+
+            function getScales(maxScale) {
+                const scales = [];
+                switch (maxScale) {
+                    case "year":
+                        scales.push(yearScale, quarterScale);
+                        break;
+                    case "quarter":
+                        scales.push(quarterScale, monthScale);
+                        break;
+                    case "month":
+                        scales.push(monthScale, getWeekScale());
+                        break;
+                    case "week":
+                        scales.push(getWeekScale(true), { unit: "day", format: "%d" });
+                        break;
+                    case "day":
+                        scales.push({ unit: "day", format: "%M %d" }, hourScale);
+                        break;
+                }
+                return scales;
+            }
+
+            const cellWidths = {
+                year: 240,
+                quarter: 140,
+                month: 80,
+                week: 60,
+                day: 40,
+            };
+
+            const scaleStart = getDate(-16, "day");
+            const scaleEnd = getDate(7, "month");
+
+            function resetScales(mode) {
+                const localService = gantt1.getService("local");
+                const currentScales = localService.getScales();
+                const newScales = getScales(mode);
+                const cellWidth = cellWidths[mode];
+
+                const minScale = newScales[newScales.length - 1].unit;
+                const start = webix.Date.add(scaleStart, -1, minScale, true);
+                const end = webix.Date.add(scaleEnd, 1, minScale, true);
+
+                localService.setScales(
+                    start,
+                    end,
+                    !(mode == "day"),
+                    cellWidth,
+                    currentScales.cellHeight,
+                    newScales
+                );
+
+                gantt1.$app.refresh();
+                gantt1.getState().$batch({ top: 0, left: 0 });
+            }
+
+            class MyBackend extends gantt.services.Backend {
+                // client-side collections
+                tasks() {
+                    return webix.promise.resolve(tasks);
+                }
+                links() {
+                    return webix.promise.resolve(links);
+                }
+                resources() {
+                    return webix.promise.resolve(resources);
+                }
+                categories() {
+                    return webix.promise.resolve(categories);
+                }
+                assignments() {
+                    return webix.promise.resolve(assignments);
+                }
+                // dummy operations handlers
+                addTask() {
+                    return webix.promise.resolve({ id: webix.uid() });
+                }
+                updateTask() {
+                    return webix.promise.resolve({});
+                }
+                removeTask() {
+                    return webix.promise.resolve({});
+                }
+                reorderTask(id) {
+                    return webix.promise.resolve({ id });
+                }
+                addLink() {
+                    return webix.promise.resolve({ id: webix.uid() });
+                }
+                updateLink() {
+                    return webix.promise.resolve({});
+                }
+                removeLink() {
+                    return webix.promise.resolve({});
+                }
+                addAssignment() {
+                    return webix.promise.resolve({ id: webix.uid() });
+                }
+                updateAssignment() {
+                    return webix.promise.resolve({});
+                }
+                removeAssignment() {
+                    return webix.promise.resolve({});
+                }
+            }
+
+            webix.ui({
+                type: "clean",
+                rows: [
+                    {
+                        rows: [
+                            {
+                                view: "toolbar",
+                                height: 57,
+                                padding: {
+                                    left: 15,
+                                    right: 15
+                                },
+                                elements: [
+                                    {
+                                        cols: [
+                                            {
+                                                view: "spacer",
+                                                css: "logo",
+                                                width: 58
+                                            },
+                                            {
+                                                view: "label",
+                                                label: "Gantt",
+                                                width: 78
+                                            }
+                                        ]
+                                    },
+                                    { gravity: 0.5 },
+                                    {
+                                        view: "richselect",
+                                        css: "toolbar_richselect",
+                                        label: "Scale:",
+                                        value: "quarter",
+                                        inputAlign: "center",
+                                        width: 145,
+                                        inputWidth: 145,
+                                        labelWidth: 50,
+                                        suggest: {
+                                            template: "#value#",
+                                            fitMaster: false,
+                                            width: 120,
+                                            body: {
+                                                view: "list",
+                                                select: true,
+                                                yCount: 6,
+                                                data: ["year", "quarter", "month", "week", "day"]
+                                            }
+                                        },
+                                        on: {
+                                            onChange(v, o) {
+                                                const text = this.getText();
+                                                const valWidth = webix.html.getTextSize(text).width;
+                                                this.define({
+                                                    width: valWidth + 100,
+                                                    inputWidth: valWidth + 96
+                                                });
+                                                this.resize();
+                                                resetScales(v, o);
+                                            },
+                                            onFocus() {
+                                                this.getNode().classList.add('toolbar_richselect_hover');
+                                            },
+                                            onBlur() {
+                                                this.getNode().classList.remove('toolbar_richselect_hover');
+                                            }
+                                        },
+                                    },
+                                    {
+                                        cols: [
+                                            {
+                                                view: "checkbox",
+                                                labelRight: "Resources diagram",
+                                                labelWidth: 0,
+                                                width: 170,
+                                                value: false,
+                                                on: {
+                                                    onChange: v => {
+                                                        gantt1.getState().resourcesDiagram = !!v;
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                view: "checkbox",
+                                                labelRight: "Resources view",
+                                                labelWidth: 0,
+                                                width: 150,
+                                                value: false,
+                                                on: {
+                                                    onChange: v => {
+                                                        let val;
+                                                        v ? val = "resources" : val = "tasks";
+                                                        gantt1.getState().display = val;
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                view: "checkbox",
+                                                labelRight: "Critical path",
+                                                labelWidth: 0,
+                                                width: 125,
+                                                value: false,
+                                                on: {
+                                                    onChange: v => {
+                                                        gantt1.getState().criticalPath = !!v;
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                view: "checkbox",
+                                                labelRight: "Baseline",
+                                                labelWidth: 0,
+                                                width: 100,
+                                                value: false,
+                                                on: {
+                                                    onChange: v => {
+                                                        gantt1.getState().baseline = !!v;
+                                                    },
+                                                },
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        view: "richselect",
+                                        css: "toolbar_richselect",
+                                        borderless: true,
+                                        label: '<span class="mdi mdi-earth mdi-18px richselect_label"></span>',
+                                        labelWidth: 28,
+                                        inputWidth: 118,
+                                        inputAlign: "center",
+                                        width: 150,
+                                        value: 1,
+                                        suggest: {
+                                            template: "#title#",
+                                            fitMaster: false,
+                                            width: 160,
+                                            body: {
+                                                view: "list",
+                                                template: "#title#",
+                                                data: [
+                                                    {
+                                                        id: 1,
+                                                        value: "en",
+                                                        title: "English"
+                                                    },
+                                                    {
+                                                        id: 2,
+                                                        value: "ru",
+                                                        title: "Русский"
+                                                    },
+                                                    {
+                                                        id: 3,
+                                                        value: "de",
+                                                        title: "Deutsch"
+                                                    },
+                                                ],
+                                                on: {
+                                                    onItemClick(id) {
+                                                        const loc = this.getItem(id).value;
+                                                        const locale = gantt1.getService("locale");
+                                                        locale.setLang(loc);
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        on: {
+                                            onFocus() {
+                                                this.getNode().classList.add('toolbar_richselect_hover');
+                                            },
+                                            onBlur() {
+                                                this.getNode().classList.remove('toolbar_richselect_hover');
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                view: "gantt",
+                                id: "gantt",
+                                scales: getScales("quarter"),
+                                scaleStart: webix.Date.add(scaleStart, -1, "month", true),
+                                scaleEnd: webix.Date.add(scaleEnd, 1, "month", true),
+                                scaleCellWidth: 140,
+                                locale: {
+                                    lang: "en",
+                                    webix: {
+                                        // switch all webix widgets to the selected locale
+                                        en: "en-US",
+                                        de: "de-DE",
+                                        ru: "ru-RU",
+                                    },
+                                },
+                                override: new Map([[gantt.services.Backend, MyBackend]]),
+                                resources: true,
+                                resourcesDiagram: false,
+                                criticalPath: false,
+                                split: true,
+                                baseline: false,
+                                display: "tasks",
+                                treeWidth: 525,
+                                markers: [
+                                    { text: "Today", css: "webix_gantt_today_marker", now: true },
+                                    {
+                                        text: "Project Launch",
+                                        start_date: getDate(7, "month"),
+                                        css: "deadline_marker",
+                                    },
+                                    {
+                                        text: "Project Launch",
+                                        start_date: getDate(24, "week"),
+                                        css: "deadline_marker",
+                                    },
+                                ]
+                            }
+                        ],
+                    },
+                    { view: "navbar", value: "gantt" }
+                ]
+            });
+
+            const gantt1 = $$("gantt");
+        });
+
+        gantt.locales.ru = {
+            Edit: "Править",
+            Done: "Готово",
+            "Delete task": "Удалить задачу",
+            "The task will be deleted permanently, are you sure?":
+                "Задача будет удалена навсегда, вы уверены?",
+            Predecessors: "Предшествующие",
+            Successors: "Последующие",
+
+            Title: "Название",
+            "Start date": "Начало",
+            "End date": "Конец",
+            Duration: "Длительность",
+            Progress: "Готовность",
+            Notes: "Заметки",
+            Type: "Тип",
+            Project: "Проект",
+            Milestone: "Веха",
+            "Add task": "Добавить задачу",
+            "Add project": "Добавить проект",
+            "(no title)": "(без названия)",
+            "Save changes?": "Сохранить изменения?",
+
+            "Related tasks": "Связанные задачи",
+            Task: "Задача",
+            Link: "Связь",
+            "End to start": "конец-начало",
+            "Start to start": "начало-начало",
+            "End to end": "конец-конец",
+            "Start to end": "начало-конец",
+
+            Lasts: "Длится",
+            day: "день",
+            days: "дней",
+
+            "Add assignment": "Назначить",
+            Assignment: "Назначение",
+            Assignments: "Назначения",
+            Assigned: "Назначены",
+            "Delete assignment": "Удалить назначение",
+            "Are you sure to delete this assignment?":
+                "Вы действительно хотите удалить это назначение?",
+            "No resources to add": "Нет ресурсов",
+            Unassigned: "Не назначено",
+
+            hour: "ч",
+            "Hours per": "Часы в",
+            "Tasks per": "Задачи в",
+            Name: "Имя",
+            Hours: "Часы",
+            Tasks: "Задачи",
+            month: "месяц",
+            week: "неделю",
+            quarter: "квартал",
+            year: "год",
+
+            "Split task": "Разделенная задача",
+            "Planned dates": "Планируемые даты",
+            "Planned dates will be removed, are you sure?":
+                "Запланированные даты будут удалены, вы уверены?",
+            "Add dates": "Запланировать даты",
+            "Remove dates": "Удалить даты",
+        };
+        gantt.locales.de = {
+            Edit: "Ändern",
+            Done: "Fertig",
+            "Delete task": "Den Auftrag löschen",
+            "The task will be deleted permanently, are you sure?":
+                "Sind Sie sicher, dass den Auftrag für immer gelöscht werden soll?",
+            Predecessors: "Vorausgehende",
+            Successors: "Nachfolgende",
+
+            Title: "Name",
+            "Start date": "Start",
+            "End date": "Ende",
+            Duration: "Dauer",
+            Progress: "Fortschritt",
+            Notes: "Notizen",
+            Type: "Type",
+            Project: "Projekt",
+            Milestone: "Phase",
+            "Add task": "Einen Auftrag hinzufügen",
+            "Add project": "Ein Projekt hinzufügen",
+            "(no title)": "(ohne Namen)",
+            "Save changes?": "Die Änderungen speichern?",
+
+            "Related tasks": "Verbundene Aufträge",
+            Task: "Auftrag",
+            Link: "Link",
+            "End to start": "Ende-Start",
+            "Start to start": "Start-Start",
+            "End to end": "Ende-Ende",
+            "Start to end": "Start-Ende",
+
+            Lasts: "Dauert",
+            day: "Tag",
+            days: "Tage",
+
+            "Add assignment": "Aufgabe hinzufügen",
+            Assignment: "Aufgabe",
+            Assignments: "Aufgaben",
+            Assigned: "Zugewiesen",
+            "Delete assignment": "Aufgabe löschen",
+            "Are you sure to delete this assignment?":
+                "Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?",
+            "No resources to add": "Keine Ressourcen zum Hinzufügen",
+            Unassigned: "Nicht zugewiesen",
+
+            hour: "h",
+            "Hours per": "Stunden pro",
+            "Tasks per": "Aufgaben pro",
+            Name: "Name",
+            Hours: "Stunden",
+            Tasks: "Aufgaben",
+            month: "Monat",
+            week: "Woche",
+            quarter: "Quartal",
+            year: "Jahr",
+
+            "Split task": "Aufgabe aufteilen",
+            "Planned dates": "Geplante Termine",
+            "Planned dates will be removed, are you sure?":
+                "Die geplanten Termine werden entfernt. Sind Sie sicher?",
+            "Add dates": "Termine hinzufügen",
+            "Remove dates": "Termine entfernen",
+        };
+    </script>
+	</body>
+</html>
+	
