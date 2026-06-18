@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal RPG - 4 Eixos</title>
+
+<style>
+/* =========================
+   FUNDO RPG (AMBIENTE)
+========================= */
+body{
+  margin:0;
+  font-family: 'Arial', sans-serif;
+  background: radial-gradient(circle at top, #1a1f2e, #05070c);
+  color:#fff;
+  overflow:hidden;
+}
+
+/* =========================
+   HUD LATERAL
+========================= */
+.hud{
+  position:fixed;
+  top:0;
+  left:0;
+  width:260px;
+  height:100vh;
+  background: rgba(10,12,18,.85);
+  border-right:1px solid rgba(255,255,255,.08);
+  padding:16px;
+  box-sizing:border-box;
+  backdrop-filter: blur(8px);
+}
+
+.hud h2{
+  margin-top:0;
+  font-size:18px;
+  color:#ffd86b;
+}
+
+.quest{
+  background:rgba(255,255,255,.05);
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.quest:hover{
+  background:rgba(255,255,255,.1);
+}
+
+.progress{
+  margin-top:10px;
+  height:8px;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ffd86b,#ff9f1c);
+  transition:.4s;
+}
+
+/* =========================
+   MAPA MUNDO
+========================= */
+.world{
+  margin-left:260px;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+/* mapa base */
+.world img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter: brightness(.9) contrast(1.1);
+}
+
+/* =========================
+   REGIÕES (EIXOS)
+========================= */
+.region{
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  text-align:center;
+  transition:.3s;
+  border:2px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.3);
+  backdrop-filter: blur(2px);
+}
+
+.region:hover{
+  transform: scale(1.2);
+  box-shadow:0 0 25px rgba(255,215,0,.4);
+  border-color:#ffd86b;
+}
+
+/* glow ativo */
+.region.active{
+  background:rgba(255,215,0,.15);
+  box-shadow:0 0 30px rgba(255,215,0,.6);
+  border-color:#ffd86b;
+}
+
+/* =========================
+   PAINEL DE CONTEÚDO
+========================= */
+.panel{
+  position:absolute;
+  right:20px;
+  top:20px;
+  width:320px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  padding:16px;
+  display:none;
+  backdrop-filter: blur(8px);
+}
+
+.panel h3{
+  margin-top:0;
+  color:#ffd86b;
+}
+
+.panel button{
+  margin-top:10px;
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:#ffd86b;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* =========================
+   PARTICULAS RPG
+========================= */
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:#ffd86b;
+  border-radius:50%;
+  opacity:.6;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float{
+  from{ transform: translateY(100vh); opacity:0; }
+  20%{opacity:.8;}
+  to{ transform: translateY(-10vh); opacity:0; }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media(max-width:768px){
+  .hud{
+    width:200px;
+  }
+  .world{
+    margin-left:200px;
+  }
+  .panel{
+    width:260px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+   HUD
+========================= -->
+<div class="hud">
+  <h2>🧭 Portal dos 4 Eixos</h2>
+
+  <div class="quest" onclick="selectQuest('Educação')">📘 Missão: Educação</div>
+  <div class="quest" onclick="selectQuest('Saúde')">⚕️ Missão: Saúde</div>
+  <div class="quest" onclick="selectQuest('Cultura')">🎭 Missão: Cultura</div>
+  <div class="quest" onclick="selectQuest('Desenvolvimento')">🏗️ Missão: Desenvolvimento</div>
+
+  <div class="progress">
+    <div class="bar" id="bar"></div>
+  </div>
+</div>
+
+<!-- =========================
+   MUNDO
+========================= -->
+<div class="world">
+
+  <img src="../img/prisma-4-eixos_bg2.png">
+
+  <!-- REGIÕES -->
+  <div class="region" style="top:25%; left:20%;" onclick="openRegion('Educação')">Educação</div>
+  <div class="region" style="top:35%; left:65%;" onclick="openRegion('Saúde')">Saúde</div>
+  <div class="region" style="top:65%; left:40%;" onclick="openRegion('Cultura')">Cultura</div>
+  <div class="region" style="top:55%; left:70%;" onclick="openRegion('Desenvolvimento')">Desenv.</div>
+
+  <!-- PAINEL -->
+  <div class="panel" id="panel">
+    <h3 id="title">Região</h3>
+    <p id="desc">Conteúdo educacional aqui...</p>
+    <button onclick="completeQuest()">Concluir missão</button>
+  </div>
+
+</div>
+
+<script>
+let progress = 0;
+let currentQuest = null;
+
+/* =========================
+   DADOS RPG
+========================= */
+const data = {
+  "Educação": "Aprenda sobre políticas educacionais, alfabetização e desenvolvimento humano.",
+  "Saúde": "Conheça sistemas de saúde pública, prevenção e bem-estar social.",
+  "Cultura": "Explore identidade cultural, arte e patrimônio histórico.",
+  "Desenvolvimento": "Entenda crescimento econômico, infraestrutura e inovação."
+};
+
+/* =========================
+   ABRIR REGIÃO
+========================= */
+function openRegion(name){
+  currentQuest = name;
+
+  document.getElementById("panel").style.display = "block";
+  document.getElementById("title").innerText = name;
+  document.getElementById("desc").innerText = data[name];
+
+  document.querySelectorAll(".region").forEach(r=>{
+    r.classList.remove("active");
+    if(r.innerText.includes(name)) r.classList.add("active");
+  });
+}
+
+/* =========================
+   MISSÃO
+========================= */
+function selectQuest(name){
+  openRegion(name);
+}
+
+function completeQuest(){
+  if(progress >= 100) return;
+
+  progress += 25;
+  document.getElementById("bar").style.width = progress + "%";
+
+  if(progress >= 100){
+    alert("🎉 Portal completo! Você dominou os 4 eixos.");
+  }
+}
+
+/* =========================
+   PARTICULAS
+========================= */
+function createParticles(){
+  for(let i=0;i<25;i++){
+    let p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random()*100 + "vw";
+    p.style.animationDuration = (3 + Math.random()*5) + "s";
+    document.body.appendChild(p);
+  }
+}
+createParticles();
+</script>
+
+</body>
+</html>
