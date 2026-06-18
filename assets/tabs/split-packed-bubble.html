@@ -76,9 +76,41 @@ Highcharts.chart('container', {
     ],
 
     plotOptions:{
+packedbubble:{
 
-        packedbubble:{
+    minSize:'12%',
+    maxSize:'40%',
 
+    zMin:0,
+    zMax:60,
+
+    useSimulation:true,
+
+    layoutAlgorithm:{
+        splitSeries:true,
+        parentNodeLimit:false,
+        dragBetweenSeries:false,
+        seriesInteraction:false,
+        gravitationalConstant:0.003,
+        bubblePadding:25
+    },
+
+    dataLabels:{
+        enabled:true,
+        format:'{point.name}',
+        style:{
+            color:'#fff',
+            textOutline:'none',
+            fontSize:'11px',
+            fontWeight:'600'
+        }
+    }
+}
+        /*packedbubble:{
+            useSimulation:true,
+            parentNode:{
+                allowPointSelect:false
+            },
             minSize:'10%',
             maxSize:'55%',
 
@@ -90,8 +122,8 @@ Highcharts.chart('container', {
             parentNodeLimit:false,
             dragBetweenSeries:false,
             seriesInteraction:false,
-            gravitationalConstant:0.005,
-            bubblePadding:10
+            gravitationalConstant:0.003,
+            bubblePadding:25
             },
 
             dataLabels:{
@@ -108,7 +140,9 @@ Highcharts.chart('container', {
                     fontWeight:'600'
                 }
             }
-        }
+        }*/
+
+        
     },
 
     series:[
@@ -119,7 +153,9 @@ Highcharts.chart('container', {
 
     {
         name:'🔵 Eixo Terapêutico',
-
+        parentNode:{
+            id:'terapeutico'
+        },
         data:[
 
         {
@@ -167,7 +203,9 @@ Highcharts.chart('container', {
 
     {
         name:'🟠 Eixo Familiar',
-
+        parentNode:{
+                id:'familiar'
+            },
         data:[
 
         {
@@ -221,51 +259,39 @@ Highcharts.chart('container', {
 
     {
         name:'🟢 Eixo Ambiental',
-
+        parentNode:{
+                id:'ambiental'
+            },
         data:[
 
-        {
-            name:'Previsibilidade',
-            value:100,
-            desc:'Principal fator protetivo.'
-        },
-
-        {
-            name:'Programação Visual',
-            value:95,
-            desc:'Organiza expectativas.'
-        },
-
-        {
-            name:'Antecipação Eventos',
-            value:92,
-            desc:'Reduz sobrecarga.'
-        },
-
-        {
-            name:'Espaço Seguro',
-            value:90,
-            desc:'Base para exploração.'
-        },
-
-        {
-            name:'Rotina',
-            value:88,
-            desc:'Favorece estabilidade.'
-        },
-
-        {
-            name:'Controle Sensorial',
-            value:85,
-            desc:'Reduz desconfortos.'
-        },
-
-        {
-            name:'Ambiente Conhecido',
-            value:82,
-            desc:'Amplia participação.'
-        }
-
+      {
+    name:'Previsibilidade',
+    value:60
+},
+{
+    name:'Programação Visual',
+    value:55
+},
+{
+    name:'Antecipação Eventos',
+    value:50
+},
+{
+    name:'Espaço Seguro',
+    value:45
+},
+{
+    name:'Rotina',
+    value:40
+},
+{
+    name:'Controle Sensorial',
+    value:35
+},
+{
+    name:'Ambiente Conhecido',
+    value:30
+}
         ]
     },
 
@@ -275,7 +301,9 @@ Highcharts.chart('container', {
 
     {
         name:'🟣 Eixo Biológico',
-
+        parentNode:{
+                id:'biologico'
+            },
         data:[
 
         {
