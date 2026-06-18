@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>4 Reinos • Jornada de Guilherme</title>
+
+<style>
+
+:root{
+
+    --terapeutico:#3b82f6;
+    --ambiental:#22c55e;
+    --comunicacional:#8b5cf6;
+    --biologico:#f59e0b;
+
+    --glass:rgba(10,20,40,.55);
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Inter,sans-serif;
+    background:#07111f;
+    overflow-x:hidden;
+    color:white;
+}
+
+/* =====================================================
+   MAPA
+===================================================== */
+
+.world{
+
+    position:relative;
+
+    width:100%;
+    min-height:100vh;
+
+    background-image:url("assets/img/4reinos-base.webp");
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+/* overlay escuro */
+
+.world::before{
+
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        rgba(5,8,15,.25),
+        rgba(5,8,15,.55)
+    );
+
+}
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.hero{
+
+    position:absolute;
+
+    top:20px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    text-align:center;
+    z-index:10;
+}
+
+.hero h1{
+
+    font-size:4rem;
+    font-weight:900;
+    letter-spacing:.03em;
+}
+
+.hero p{
+
+    margin-top:10px;
+    font-size:1.1rem;
+    opacity:.9;
+}
+
+/* =====================================================
+   REINOS
+===================================================== */
+
+.realm{
+
+    position:absolute;
+
+    backdrop-filter:blur(10px);
+
+    background:var(--glass);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    width:280px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    z-index:5;
+
+    transition:.3s;
+}
+
+.realm:hover{
+
+    transform:scale(1.03);
+}
+
+.realm h2{
+
+    font-size:1.5rem;
+    margin-bottom:12px;
+}
+
+.realm ul{
+
+    list-style:none;
+}
+
+.realm li{
+
+    margin:8px 0;
+    opacity:.9;
+}
+
+/* =====================================================
+   POSICIONAMENTO
+===================================================== */
+
+.terapeutico{
+
+    left:4%;
+    top:18%;
+
+    border-left:5px solid var(--terapeutico);
+}
+
+.ambiental{
+
+    right:4%;
+    top:18%;
+
+    border-left:5px solid var(--ambiental);
+}
+
+.comunicacional{
+
+    left:4%;
+    bottom:10%;
+
+    border-left:5px solid var(--comunicacional);
+}
+
+.biologico{
+
+    right:4%;
+    bottom:10%;
+
+    border-left:5px solid var(--biologico);
+}
+
+/* =====================================================
+   ÁRVORE CENTRAL
+===================================================== */
+
+.tree-core{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:320px;
+    height:320px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.9),
+        rgba(255,215,80,.25),
+        transparent
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    z-index:6;
+}
+
+.tree-core h3{
+
+    font-size:2rem;
+}
+
+.tree-core span{
+
+    display:block;
+    margin-top:12px;
+    font-size:1rem;
+}
+
+/* =====================================================
+   PAINEL DO JOGADOR
+===================================================== */
+
+.player-card{
+
+    position:absolute;
+
+    bottom:25px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:520px;
+
+    background:var(--glass);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    z-index:10;
+}
+
+.player-card h4{
+
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.stats{
+
+    display:flex;
+    justify-content:space-around;
+}
+
+.stat{
+
+    text-align:center;
+}
+
+.stat-value{
+
+    font-size:1.5rem;
+    font-weight:700;
+}
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:1200px){
+
+    .realm{
+
+        position:relative;
+
+        width:100%;
+        max-width:500px;
+
+        margin:20px auto;
+    }
+
+    .world{
+
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+
+        padding-top:140px;
+        padding-bottom:300px;
+    }
+
+    .tree-core{
+
+        position:relative;
+        transform:none;
+
+        left:auto;
+        top:auto;
+
+        margin:auto;
+    }
+
+    .player-card{
+
+        position:relative;
+
+        left:auto;
+        bottom:auto;
+
+        transform:none;
+
+        margin:auto;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="world">
+
+    <div class="hero">
+        <h1>4 REINOS</h1>
+        <p>Descubra o que fortalece seu mundo</p>
+    </div>
+
+    <div class="realm terapeutico">
+
+        <h2>🔵 Reino Terapêutico</h2>
+
+        <ul>
+            <li>Torre da Antecipação</li>
+            <li>Jardim das Memórias</li>
+            <li>Floresta dos Sentimentos</li>
+            <li>Labirinto da Compreensão</li>
+        </ul>
+
+    </div>
+
+    <div class="realm ambiental">
+
+        <h2>🟢 Reino Ambiental</h2>
+
+        <ul>
+            <li>Casa Segura</li>
+            <li>Trilha das Rotinas</li>
+            <li>Cidade dos Sons e Luzes</li>
+            <li>Observatório da Previsibilidade</li>
+        </ul>
+
+    </div>
+
+    <div class="realm comunicacional">
+
+        <h2>🟣 Reino Comunicacional</h2>
+
+        <ul>
+            <li>Praça da Expressão</li>
+            <li>Ponte dos Amigos</li>
+            <li>Teatro das Histórias</li>
+            <li>Vila dos Símbolos</li>
+        </ul>
+
+    </div>
+
+    <div class="realm biologico">
+
+        <h2>🟡 Reino Biológico</h2>
+
+        <ul>
+            <li>Fontes da Energia</li>
+            <li>Relógio Vivo</li>
+            <li>Vale da Recuperação</li>
+            <li>Horta da Nutrição</li>
+        </ul>
+
+    </div>
+
+    <div class="tree-core">
+
+        <div>
+
+            <h3>Árvore da Vida</h3>
+
+            <span>
+                Integração Sistêmica
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="player-card">
+
+        <h4>🧭 Guardião da Árvore</h4>
+
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-value">100</div>
+                <div>❤️ Emoção</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">75</div>
+                <div>⭐ Autonomia</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">60</div>
+                <div>💎 Comunicação</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">80</div>
+                <div>🌿 Regulação</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* futura engine do jogo */
+
+const gameState = {
+
+    terapeutico:100,
+    ambiental:85,
+    comunicacional:72,
+    biologico:88
+
+};
+
+console.log("4 Reinos carregado",gameState);
+
+</script>
+
+</body>
+</html>
