@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>3 Reinos V4</title>
+
+<style>
+
+:root{
+
+--bg:#07111f;
+
+--glass:rgba(8,15,35,.58);
+
+--border:rgba(255,255,255,.15);
+
+--shadow:0 0 20px rgba(0,0,0,.35);
+
+--terapeutico:#4da3ff;
+--ambiental:#56d66b;
+--comunicacional:#b27cff;
+
+--gold:#ffd54f;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Inter,Segoe UI,sans-serif;
+background:var(--bg);
+color:white;
+overflow:hidden;
+}
+
+.world{
+position:relative;
+width:100vw;
+height:100vh;
+background:url("../img/3reinos.jpg") center center/cover no-repeat;
+}
+
+.world::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+rgba(0,0,0,.15),
+rgba(0,0,0,.55)
+);
+}
+
+.particles{
+
+position:absolute;
+inset:0;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.8) 1px,
+transparent 2px
+);
+
+background-size:120px 120px;
+
+opacity:.25;
+
+animation:stars 80s linear infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes stars{
+
+from{
+background-position:0 0;
+}
+
+to{
+background-position:0 -800px;
+}
+
+}
+
+.hero{
+
+position:absolute;
+
+left:50%;
+top:20px;
+
+transform:translateX(-50%);
+
+z-index:20;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:clamp(2rem,4vw,4rem);
+
+text-shadow:
+0 0 25px rgba(255,215,0,.7);
+
+}
+
+.hero p{
+opacity:.85;
+}
+
+.hud{
+
+position:absolute;
+
+background:var(--glass);
+
+backdrop-filter:blur(10px);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:14px;
+
+box-shadow:var(--shadow);
+
+z-index:10;
+
+}
+
+.balance{
+top:20px;
+right:20px;
+width:280px;
+}
+
+.player{
+left:50%;
+bottom:20px;
+transform:translateX(-50%);
+width:min(700px,92vw);
+}
+
+.quest{
+left:20px;
+top:20px;
+width:280px;
+}
+
+.realm-row{
+
+display:flex;
+justify-content:space-between;
+
+margin:8px 0;
+
+}
+
+.bar{
+
+height:8px;
+
+background:rgba(255,255,255,.12);
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:4px;
+
+}
+
+.bar-fill{
+height:100%;
+}
+
+.tree{
+
+position:absolute;
+
+left:50%;
+top:50%;
+
+transform:translate(-50%,-50%);
+
+width:180px;
+height:180px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+background:
+radial-gradient(
+circle,
+white,
+rgba(255,213,79,.3),
+transparent
+);
+
+z-index:10;
+
+transition:.6s;
+
+}
+
+.poi{
+
+position:absolute;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+
+background:rgba(0,0,0,.55);
+
+border:2px solid rgba(255,255,255,.4);
+
+transition:.3s;
+
+animation:glow 4s infinite;
+
+z-index:15;
+
+}
+
+.poi:hover{
+
+transform:scale(1.15);
+
+}
+
+@keyframes glow{
+
+0%,100%{
+box-shadow:0 0 10px rgba(255,255,255,.15);
+}
+
+50%{
+box-shadow:0 0 24px rgba(255,255,255,.5);
+}
+
+}
+
+.poi span{
+
+position:absolute;
+
+top:65px;
+
+white-space:nowrap;
+
+background:rgba(0,0,0,.7);
+
+padding:4px 8px;
+
+border-radius:8px;
+
+font-size:.8rem;
+
+}
+
+.t1{left:25%;top:30%;}
+.a1{right:25%;top:35%;}
+.c1{left:22%;bottom:25%;}
+
+.inventory{
+
+margin-top:10px;
+
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+
+}
+
+.crystal{
+
+padding:6px 10px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.08);
+
+cursor:pointer;
+
+}
+
+.log{
+
+margin-top:10px;
+
+font-size:.8rem;
+
+max-height:120px;
+
+overflow:auto;
+
+}
+
+@media(max-width:900px){
+
+.poi span{
+display:none;
+}
+
+.balance{
+width:220px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="world">
+
+<div class="particles"></div>
+
+<div class="hero">
+<h1>AVENTURA DOS 3 REINOS</h1>
+<p>RPG de desenvolvimento e equilíbrio</p>
+</div>
+
+<div id="tree" class="tree">
+<div>
+<h3>Árvore da Vida</h3>
+<p id="treeStatus">Equilíbrio</p>
+</div>
+</div>
+
+<div class="hud balance">
+
+<h3>Reinos</h3>
+
+<div id="realms"></div>
+
+</div>
+
+<div class="hud quest">
+
+<h3>Missão Atual</h3>
+
+<p id="questText"></p>
+
+<div class="log" id="log"></div>
+
+</div>
+
+<div class="poi t1"
+data-realm="terapeutico"
+data-value="5">
+
+🏰
+
+<span>Torre da Antecipação</span>
+
+</div>
+
+<div class="poi a1"
+data-realm="ambiental"
+data-value="5">
+
+🏡
+
+<span>Casa Segura</span>
+
+</div>
+
+<div class="poi c1"
+data-realm="comunicacional"
+data-value="5">
+
+💬
+
+<span>Praça da Expressão</span>
+
+</div>
+
+<div class="hud player">
+
+<h3 style="text-align:center">
+Guardião da Árvore
+</h3>
+
+<div id="playerStats"></div>
+
+<div class="inventory">
+
+<div class="crystal">
+💙 Estou cansado
+</div>
+
+<div class="crystal">
+💚 Preciso de ajuda
+</div>
+
+<div class="crystal">
+💜 Quero companhia
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const GAME={
+
+xp:0,
+
+level:1,
+
+player:{
+emocao:100,
+autonomia:70,
+comunicacao:60
+},
+
+realms:{
+terapeutico:90,
+ambiental:92,
+comunicacional:85
+},
+
+quests:[
+"Visite um reino",
+"Fortaleça a comunicação",
+"Equilibre os três reinos"
+],
+
+log:[]
+
+};
+
+function save(){
+
+localStorage.setItem(
+"3reinosv4",
+JSON.stringify(GAME)
+);
+
+}
+
+function renderRealms(){
+
+const el=document.getElementById("realms");
+
+el.innerHTML="";
+
+Object.entries(GAME.realms)
+
+.forEach(([realm,val])=>{
+
+el.innerHTML+=`
+
+<div class="realm-row">
+
+<span>${realm}</span>
+
+<span>${val}%</span>
+
+</div>
+
+<div class="bar">
+
+<div
+class="bar-fill"
+style="width:${val}%;
+background:${getColor(realm)}">
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+function renderPlayer(){
+
+document.getElementById(
+"playerStats"
+).innerHTML=`
+
+<div style="
+display:flex;
+justify-content:space-around">
+
+<div>
+<strong>${GAME.player.emocao}</strong>
+<br>❤️ Emoção
+</div>
+
+<div>
+<strong>${GAME.player.autonomia}</strong>
+<br>⭐ Autonomia
+</div>
+
+<div>
+<strong>${GAME.player.comunicacao}</strong>
+<br>💎 Comunicação
+</div>
+
+<div>
+<strong>${GAME.level}</strong>
+<br>🏆 Nível
+</div>
+
+</div>
+
+`;
+
+}
+
+function updateTree(){
+
+const avg=
+
+Object.values(GAME.realms)
+
+.reduce((a,b)=>a+b,0)
+
+/
+
+3;
+
+const tree=document.getElementById("tree");
+
+tree.style.transform=
+`translate(-50%,-50%)
+scale(${avg/100})`;
+
+document.getElementById(
+"treeStatus"
+).textContent=
+
+avg>90
+?"Florescendo"
+:avg>75
+?"Saudável"
+:"Precisando de cuidado";
+
+}
+
+function getColor(realm){
+
+return{
+
+terapeutico:"#4da3ff",
+
+ambiental:"#56d66b",
+
+comunicacional:"#b27cff"
+
+}[realm];
+
+}
+
+function addXP(v){
+
+GAME.xp+=v;
+
+if(GAME.xp>=100){
+
+GAME.level++;
+
+GAME.xp=0;
+
+addLog(
+"🌟 Novo nível alcançado!"
+);
+
+}
+
+}
+
+function addLog(msg){
+
+GAME.log.unshift(msg);
+
+GAME.log=GAME.log.slice(0,10);
+
+document.getElementById(
+"log"
+).innerHTML=
+
+GAME.log.join("<br>");
+
+}
+
+document
+
+.querySelectorAll(".poi")
+
+.forEach(poi=>{
+
+poi.addEventListener("click",()=>{
+
+const realm=
+poi.dataset.realm;
+
+GAME.realms[realm]+=5;
+
+if(GAME.realms[realm]>100)
+GAME.realms[realm]=100;
+
+addXP(15);
+
+addLog(
+`✨ ${realm} fortalecido`
+);
+
+render();
+
+});
+
+});
+
+function render(){
+
+renderRealms();
+
+renderPlayer();
+
+updateTree();
+
+save();
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>
