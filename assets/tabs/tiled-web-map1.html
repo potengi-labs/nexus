@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>GeoGO Educacional - Natal/RN</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff;
+}
+
+#map {
+    height: 100vh;
+}
+
+#hud {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 999;
+    width: 220px;
+}
+
+button {
+    margin-top: 6px;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: #1d6aff;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hud">
+🧭 GeoGO Natal<br>
+⭐ XP: <span id="xp">0</span><br>
+🏅 Nível: <span id="level">1</span><br>
+<button onclick="locate()">📍 Minha localização</button>
+</div>
+
+<div id="map"></div>
+
+<script>
+
+let xp = 0;
+let level = 1;
+
+function updateHUD(){
+    document.getElementById("xp").innerText = xp;
+    document.getElementById("level").innerText = level;
+}
+
+function addXP(v){
+    xp += v;
+    if(xp >= level * 50){
+        level++;
+        alert("🏆 Você subiu de nível!");
+    }
+    updateHUD();
+}
+
+/* 📍 mapa centrado em Natal */
+const map = L.map('map').setView([-5.7945, -35.2110], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+
+/* 🧭 pontos educativos */
+const places = [
+{
+    name: "🏰 Forte dos Reis Magos",
+    coords: [-5.7493, -35.2036],
+    info: "Marco histórico da fundação de Natal.",
+    xp: 20
+},
+{
+    name: "🌉 Ponte Newton Navarro",
+    coords: [-5.7565, -35.2030],
+    info: "Conecta zonas norte e sul da cidade.",
+    xp: 15
+},
+{
+    name: "🏖️ Praia de Ponta Negra",
+    coords: [-5.8820, -35.1780],
+    info: "Principal polo turístico de Natal.",
+    xp: 10
+},
+{
+    name: "🏝️ Morro do Careca",
+    coords: [-5.8835, -35.1765],
+    info: "Duna símbolo do turismo potiguar.",
+    xp: 10
+},
+{
+    name: "🏛️ Centro Histórico",
+    coords: [-5.7793, -35.2006],
+    info: "Arquitetura colonial e patrimônio cultural.",
+    xp: 15
+},
+{
+    name: "📍 Neópolis - Rua Solon Aranha",
+    coords: [-5.8470, -35.2060],
+    info: "Área urbana residencial de Natal.",
+    xp: 5
+}
+];
+
+/* 🎮 adicionar marcadores */
+places.forEach(p => {
+
+    const marker = L.marker(p.coords).addTo(map);
+
+    marker.bindPopup(`
+        <b>${p.name}</b><br>
+        ${p.info}<br><br>
+        <button onclick="capture('${p.name}', ${p.xp})">
+            🎮 Explorar (+XP)
+        </button>
+    `);
+
+});
+
+window.capture = function(name, xpGain){
+    addXP(xpGain);
+    alert("✔ Exploração concluída: " + name + " +" + xpGain + " XP");
+};
+
+/* 📍 GPS real do aluno */
+window.locate = function(){
+
+    if(!navigator.geolocation){
+        alert("GPS não suportado");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(pos => {
+
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup("📍 Você está aqui")
+        .openPopup();
+
+        map.setView([lat, lng], 15);
+
+    });
+
+};
+
+updateHUD();
+
+</script>
+
+</body>
+</html>
