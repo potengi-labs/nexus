@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Atividade de Geografia — Zonas Climáticas da Terra</title>
+
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css' />
+    <script src='https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js'></script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+}
+
+html, body, #map {
+    height: 100%;
+}
+
+/* 🎓 PAINEL DE ATIVIDADE */
+#info {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    background: rgba(255,255,255,0.95);
+    padding: 12px 14px;
+
+    border-radius: 10px;
+    width: 260px;
+
+    font-size: 13px;
+    line-height: 1.4;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+
+    z-index: 999;
+}
+
+/* 🎯 BOTÃO DE AÇÃO */
+#fly {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 60%;
+    max-width: 520px;
+
+    height: 46px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: center;
+    color: #fff;
+
+    background: linear-gradient(135deg, #1d6aff, #00b4d8);
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+
+    cursor: pointer;
+    z-index: 999;
+}
+
+#fly:hover {
+    filter: brightness(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<div id="info">
+    <b>🌍 Atividade de Geografia</b><br><br>
+
+    Observe o globo e compare duas regiões:<br><br>
+
+    📍 <b>Equador (0°)</b><br>
+    → maior incidência solar<br>
+    → clima mais quente<br><br>
+
+    📍 <b>Polos (90° N/S)</b><br>
+    → menor incidência solar<br>
+    → clima frio extremo<br><br>
+
+    🎯 Objetivo: compreender como a latitude influencia o clima.
+</div>
+
+<div id="map"></div>
+
+<button id="fly">🔄 Explorar Equador e Polos</button>
+
+<script>
+const map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://demotiles.maplibre.org/style.json',
+    center: [0, 0],
+    zoom: 2,
+});
+
+map.on('style.load', () => {
+    map.setProjection({
+        type: 'globe'
+    });
+});
+
+/* 📐 ajuste de zoom para manter proporção no globo */
+function getZoomAdjustment(oldLatitude, newLatitude) {
+    return Math.log2(
+        Math.cos(newLatitude / 180 * Math.PI) /
+        Math.cos(oldLatitude / 180 * Math.PI)
+    );
+}
+
+/* 🎮 lógica da atividade */
+let toggle = false;
+const zoomDelta = 1.2;
+
+document.getElementById('fly').addEventListener('click', () => {
+
+    // alterna entre EQUADOR e POLO NORTE
+    const targetLat = toggle ? 0 : 80;
+
+    const center = [
+        map.getCenter().lng,
+        targetLat
+    ];
+
+    const zoom = map.getZoom()
+        + (toggle ? zoomDelta : -zoomDelta)
+        + getZoomAdjustment(map.getCenter().lat, targetLat);
+
+    map.flyTo({
+        center,
+        zoom,
+        essential: true
+    });
+
+    toggle = !toggle;
+});
+</script>
+
+</body>
+</html>
