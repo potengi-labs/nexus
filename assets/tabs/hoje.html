@@ -47,3 +47,158 @@
 
 </div>
     </section>
+
+<div class="timeline2-wrapper">
+
+    <div class="continuum-header">
+        <h2>MONITORAMENTO E EVOLUÇÃO</h2>
+        <p>
+            Observações, hipóteses, decisões e aprendizados integrados em uma apresentação linear.
+        </p>
+    </div>
+
+    <div id="timeline2"></div>
+
+</div>
+
+<style>
+
+.timeline2-wrapper{
+    padding:24px;
+}
+
+.continuum-header{
+    margin-bottom:30px;
+}
+
+.continuum-header h2{
+    margin:0;
+}
+
+#timeline2{
+    min-height:700px;
+}
+
+</style>
+
+<script>
+
+(function(){
+
+function loadScript(src){
+
+    return new Promise((resolve,reject)=>{
+
+        if(document.querySelector(
+            `script[src="${src}"]`
+        )){
+            resolve();
+            return;
+        }
+
+        const s =
+            document.createElement("script");
+
+        s.src = src;
+
+        s.onload = resolve;
+        s.onerror = reject;
+
+        document.head.appendChild(s);
+
+    });
+
+}
+
+(async()=>{
+
+await loadScript(
+"https://code.highcharts.com/highcharts.js"
+);
+
+await loadScript(
+"https://code.highcharts.com/modules/timeline.js"
+);
+
+Highcharts.chart("timeline2",{
+
+    chart:{
+        type:"timeline",
+        zooming:{
+            type:"x"
+        }
+    },
+
+    title:{
+        text:"Continuum Sylvia"
+    },
+
+    subtitle:{
+        text:"Do registro à tomada de decisão"
+    },
+
+    xAxis:{
+        visible:false
+    },
+
+    yAxis:{
+        visible:false
+    },
+
+    series:[{
+
+        data:[
+
+        {
+            name:"👦 Guilherme",
+            description:
+            "Rotina matinal com boa aderência."
+        },
+
+        {
+            name:"🔍 Observação",
+            description:
+            "Recusa alimentar observada após mudança de ambiente."
+        },
+
+        {
+            name:"🧩 Hipótese",
+            description:
+            "Possível sobrecarga sensorial."
+        },
+
+        {
+            name:"🧪 Validação",
+            description:
+            "Padrão repetido em três ocorrências."
+        },
+
+        {
+            name:"📜 Decisão",
+            description:
+            "Aplicar exposição gradual."
+        },
+
+        {
+            name:"📚 Aprendizado",
+            description:
+            "Melhor resposta após antecipação visual."
+        },
+
+        {
+            name:"🌱 Sylvia",
+            description:
+            "Leitura concluída e atividade física realizada."
+        }
+
+        ]
+
+    }]
+
+});
+
+})();
+
+})();
+
+</script>
