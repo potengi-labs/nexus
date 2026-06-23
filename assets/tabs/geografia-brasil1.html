@@ -1,10 +1,19 @@
-<html><body>
+Segue a versão corrigida:
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Educacional do Brasil</title>
 
 <style>
-.body {
+body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: #f5f7fb;
     color: #1f2a44;
+    margin: 0;
+    padding: 20px;
 }
 
 .highcharts-figure {
@@ -13,7 +22,7 @@
     max-width: 900px;
 }
 
-.container {
+#container {
     height: 650px;
 }
 
@@ -32,6 +41,9 @@
 <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
 <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
 
+</head>
+<body>
+
 <section class="section" id="geografia-brasil1"><div>
 <figure class="highcharts-figure">
     <div id="container"></div>
@@ -42,7 +54,7 @@
         distribuição populacional, concentração urbana e desigualdades regionais.
     </p>
 </figure>
-</div></section>
+</section>
 
 <script>
 (async () => {
@@ -142,4 +154,6 @@
 
 })();
 </script>
-</body></html>
+
+</body>
+</html>
