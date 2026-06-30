@@ -35,7 +35,7 @@ function initMenuToggle() {
   const sidebar = document.querySelector(".sidebar");
   const sidebarfull = document.querySelector(".sidebarfull");
 
-  if (!menuToggle || !sidebar) return;
+  if (!menuToggle) return;
 
   menuToggle.addEventListener("click", (e) => {
 
@@ -43,25 +43,21 @@ function initMenuToggle() {
 
     sidebar.classList.toggle("show");
 
+      if (sidebarfull) {
+    sidebarfull.classList.toggle("show");
+        
   });
 
   document.addEventListener("click", (e) => {
 
-    if (
-      !sidebar.contains(e.target) &&
-      !menuToggle.contains(e.target)
-    ) {
-      sidebar.classList.remove("show");
-    }
 
+  if (sidebar) {
+    sidebar.classList.toggle("show");
+  }
 
-    if (
-      sidebarfull &&
-      !sidebarfull.contains(e.target) &&
-      !menuToggle.contains(e.target)
-    ) {
-      sidebarfull.classList.remove("show");
-    }
+  if (sidebarfull) {
+    sidebarfull.classList.toggle("show");
+  }
     
     
   });
