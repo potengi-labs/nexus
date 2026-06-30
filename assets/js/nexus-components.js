@@ -33,6 +33,7 @@ function initMenuToggle() {
 
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.querySelector(".sidebar");
+  const sidebarfull = document.querySelector(".sidebarfull");
 
   if (!menuToggle || !sidebar) return;
 
@@ -53,6 +54,16 @@ function initMenuToggle() {
       sidebar.classList.remove("show");
     }
 
+
+    if (
+      sidebarfull &&
+      !sidebarfull.contains(e.target) &&
+      !menuToggle.contains(e.target)
+    ) {
+      sidebarfull.classList.remove("show");
+    }
+    
+    
   });
 
 }
@@ -69,6 +80,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadComponent(
       "sidebar-container",
       "assets/components/nexus-sidebar.html"
+    ),
+
+    loadComponent(
+      "sidebarfull-container",
+      "assets/components/nexus-sidebarfull.html"
     ),
     
     loadComponent( 
