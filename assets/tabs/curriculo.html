@@ -154,52 +154,36 @@ Highcharts.chart('container', {
                 '{point.from} conecta-se a {point.to}.'
         }
     },
-
     credits:{
         enabled:false
     },
-
     legend:{
         enabled:false
     },
-
     series:[{
-
         type:'arcdiagram',
-
         name:'Trajetória Científica',
-
         keys:['from','to','weight'],
-
         centeredLinks:true,
-
         linkWeight:3,
-
         minLinkWidth:2,
-
         curveFactor:.65,
-
         offset:'60%',
-
         dataLabels:{
             enabled:true,
             rotation:90,
             y:18,
-
             style:{
                 fontSize:'12px',
                 fontWeight:'600',
                 textOutline:'none'
             }
         },
-
         nodes:[
-
             {
                 id:'Macau',
                 color:'#90CAF9'
             },
-
             {
                 id:'Pedagogia UFRN',
                 color:'#FFB74D',
@@ -207,7 +191,6 @@ Highcharts.chart('container', {
                     radius:12
                 }
             },
-
             {
                 id:'Guilherme',
                 color:'#4CAF50',
@@ -215,7 +198,6 @@ Highcharts.chart('container', {
                     radius:20
                 }
             },
-
             {
                 id:'Metodologias Próprias',
                 color:'#00ACC1',
@@ -226,7 +208,7 @@ Highcharts.chart('container', {
 
             {
                 id:'Sistema REDE',
-                color:'#3949AB',
+                color:'#90CAF9'
                 marker:{
                     radius:22
                 }
