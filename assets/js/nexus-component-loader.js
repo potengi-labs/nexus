@@ -408,7 +408,7 @@ async () => {
         )
     ) {
 
-        loadTab("hoje");
+        loadTab("semana");
 
     }
 
