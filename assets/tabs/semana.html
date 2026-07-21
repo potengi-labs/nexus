@@ -1,0 +1,249 @@
+<section id="semana" class="tab-content active">
+
+    <div class="section-header">
+        <h2>📅 Semana</h2>
+        <small>
+            Documento oficial hospedado no Google Drive.
+        </small>
+    </div>
+
+    <div class="card">
+
+        <p>
+            Consulte o documento completo diretamente nesta página
+            ou abra no Google Drive.
+        </p>
+
+        <p>
+            <a
+                href="https://docs.google.com/document/d/1l_I3aZLV_0c2ikihcX2gtPpzZvG36ldOQ1RD0WZ8q1E/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-drive"
+            >
+                🔗 Abrir documento no Google Drive
+            </a>
+        </p>
+
+        <iframe
+            src="https://docs.google.com/document/d/1l_I3aZLV_0c2ikihcX2gtPpzZvG36ldOQ1RD0WZ8q1E/preview"
+            width="100%"
+            height="700"
+            style="
+                border:none;
+                border-radius:16px;
+                background:#fff;
+            "
+            loading="lazy">
+        </iframe>
+
+    </div>
+
+</section>
+<br><br>
+
+
+<section>
+
+<div class="section">
+
+    <div class="section-header">
+        <h2>🌌 Horizonte Cognitivo</h2>
+        <small>
+            Conectando fragmentos, investigações, hipóteses e descobertas em um único panorama operacional.
+        </small>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <small>📅 Hoje</small>
+            <strong>4 compromissos</strong>
+            <p>
+                Agenda integrada com eventos, atendimentos e pontos de atenção do dia.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>🔎 Investigações Ativas</small>
+            <strong>7</strong>
+            <p>
+                Temas atualmente em observação e construção de entendimento.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>🧩 Hipóteses</small>
+            <strong>12</strong>
+            <p>
+                Relações e explicações sendo acompanhadas pelo Nexus.
+            </p>
+        </div>
+
+        <div class="card">
+            <small>✨ Descobertas</small>
+            <strong>3 novas</strong>
+            <p>
+                Padrões emergentes identificados a partir das observações recentes.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+    </section>
+
+<div class="timeline2-wrapper">
+
+    <div class="continuum-header">
+        <h2>MONITORAMENTO E EVOLUÇÃO</h2>
+        <p>
+            Observações, hipóteses, decisões e aprendizados integrados em uma apresentação linear.
+        </p>
+    </div>
+
+    <div id="timeline2"></div>
+
+</div>
+
+<style>
+
+.timeline2-wrapper{
+    padding:24px;
+}
+
+.continuum-header{
+    margin-bottom:30px;
+}
+
+.continuum-header h2{
+    margin:0;
+}
+
+#timeline2{
+    min-height:700px;
+}
+
+</style>
+
+<script>
+
+(function(){
+
+function loadScript(src){
+
+    return new Promise((resolve,reject)=>{
+
+        if(document.querySelector(
+            `script[src="${src}"]`
+        )){
+            resolve();
+            return;
+        }
+
+        const s =
+            document.createElement("script");
+
+        s.src = src;
+
+        s.onload = resolve;
+        s.onerror = reject;
+
+        document.head.appendChild(s);
+
+    });
+
+}
+
+(async()=>{
+
+await loadScript(
+"https://code.highcharts.com/highcharts.js"
+);
+
+await loadScript(
+"https://code.highcharts.com/modules/timeline.js"
+);
+
+Highcharts.chart("timeline2",{
+
+    chart:{
+        type:"timeline",
+        zooming:{
+            type:"x"
+        }
+    },
+
+    title:{
+        text:"Continuum Sylvia"
+    },
+
+    subtitle:{
+        text:"Do registro à tomada de decisão"
+    },
+
+    xAxis:{
+        visible:false
+    },
+
+    yAxis:{
+        visible:false
+    },
+
+    series:[{
+
+        data:[
+
+        {
+            name:"👦 Guilherme",
+            description:
+            "Rotina matinal com boa aderência."
+        },
+
+        {
+            name:"🔍 Observação",
+            description:
+            "Recusa alimentar observada após mudança de ambiente."
+        },
+
+        {
+            name:"🧩 Hipótese",
+            description:
+            "Possível sobrecarga sensorial."
+        },
+
+        {
+            name:"🧪 Validação",
+            description:
+            "Padrão repetido em três ocorrências."
+        },
+
+        {
+            name:"📜 Decisão",
+            description:
+            "Aplicar exposição gradual."
+        },
+
+        {
+            name:"📚 Aprendizado",
+            description:
+            "Melhor resposta após antecipação visual."
+        },
+
+        {
+            name:"🌱 Sylvia",
+            description:
+            "Leitura concluída e atividade física realizada."
+        }
+
+        ]
+
+    }]
+
+});
+
+})();
+
+})();
+
+</script>
