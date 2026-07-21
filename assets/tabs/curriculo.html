@@ -1,0 +1,194 @@
+<!-- CONTEÚDO ARC DIAGRAM -->
+<style>
+.body {
+    background: var(--highcharts-background-color);
+    color: var(--highcharts-neutral-color-100);
+}
+
+.container {
+    height: 400px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.btn-drive{
+    display:inline-block;
+    padding:12px 18px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+    margin-bottom:20px;
+    border:1px solid rgba(255,255,255,.15);
+}
+
+.btn-drive:hover{
+    transform:translateY(-1px);
+}
+    
+</style>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/sankey.js"></script>
+<script src="https://code.highcharts.com/modules/arc-diagram.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<!-- CONTEÚDO ARC DIAGRAM -->
+
+<section class="section" id="fragmentos">
+
+    <div class="section-header">
+        <h2>⭐ Fragmentos de Informações</h2>
+        <small>
+            Documento oficial hospedado no Google Drive.
+        </small>
+    </div>
+
+    <div class="card">
+
+        <p>
+            Consulte o documento completo diretamente nesta página
+            ou abra no Google Drive.
+        </p>
+
+        <p>
+            <a
+                href="https://docs.google.com/document/d/1d-FTgvofHKugktlNYRamY888cTnVgfn3khrjz4Ya9Wg/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-drive"
+            >
+                🔗 Abrir documento no Google Drive
+            </a>
+        </p>
+
+        <iframe
+            src="https://docs.google.com/document/d/1d-FTgvofHKugktlNYRamY888cTnVgfn3khrjz4Ya9Wg/preview"
+            width="100%"
+            height="700"
+            style="
+                border:none;
+                border-radius:16px;
+                background:#fff;
+            "
+            loading="lazy">
+        </iframe>
+
+    </div>
+
+</section>
+<br><br>
+<div class="section">
+
+    <div class="section-header">
+        <h2>🎯 O que merece atenção agora?</h2>
+        <small>
+            Síntese operacional produzida pelo Nexus.
+        </small>
+    </div>
+
+    <div class="card">
+
+        <small>PRIORIDADE CENTRAL</small>
+
+        <h3>
+            Revisar a investigação "Previsibilidade e Ansiedade"
+        </h3>
+
+        <p>
+            Novas observações registradas esta semana fortaleceram a hipótese
+            de que antecipação visual reduz resistência a mudanças.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- CONTEÚDO ARC DIAGRAM -->
+
+<div id="container"></div>
+
+<script>Highcharts.chart('container', {
+
+
+title: {
+    text: 'Rede de Construção do Conhecimento — Sylvia'
+},
+
+accessibility: {
+    description:
+        'Diagrama representando a trajetória de formação, pesquisa e desenvolvimento metodológico de Sylvia.'
+},
+
+series: [{
+    name: 'Trajetória Científica',
+    linkWeight: 2,
+    centeredLinks: true,
+
+    dataLabels: {
+        rotation: 90,
+        y: 18,
+        style: {
+            fontWeight: '600',
+            fontSize: '12px'
+        }
+    },
+
+    minLinkWidth: 1,
+    offset: '58%'
+}],
+       data: [
+
+    // Origem
+    ['Macau', 'Pedagogia UFRN', 5],
+
+    // Formação
+    ['Pedagogia UFRN', 'Experiência Escolar', 4],
+    ['Pedagogia UFRN', 'Formação Complementar', 3],
+
+    // Experiência
+    ['Experiência Escolar', 'Escola Privada', 3],
+    ['Experiência Escolar', 'Escola Estadual', 3],
+
+    // Ponto de inflexão
+    ['Escola Privada', 'Guilherme', 7],
+    ['Escola Estadual', 'Guilherme', 5],
+
+    // Núcleo de investigação
+    ['Guilherme', 'Análise do Comportamento', 8],
+    ['Guilherme', 'Observação Longitudinal', 8],
+    ['Guilherme', 'Pesquisa Aplicada', 8],
+    ['Guilherme', 'Contexto Familiar', 6],
+    ['Guilherme', 'Ambiente', 6],
+
+    // Formação especializada
+    ['Análise do Comportamento', 'CBI Miami (ABA)', 4],
+    ['Pesquisa Aplicada', 'Neuropsicopedagogia', 4],
+    ['Pesquisa Aplicada', 'Psicopedagogia', 4],
+
+    // Consolidação metodológica
+    ['Observação Longitudinal', 'Metodologias Próprias', 7],
+    ['Análise do Comportamento', 'Metodologias Próprias', 6],
+    ['Contexto Familiar', 'Metodologias Próprias', 5],
+    ['Ambiente', 'Metodologias Próprias', 5],
+
+    // Sistema REDE
+    ['Metodologias Próprias', 'Sistema REDE', 10],
+    ['Pesquisa Aplicada', 'Sistema REDE', 8],
+    ['Observação Longitudinal', 'Sistema REDE', 7],
+    ['Análise do Comportamento', 'Sistema REDE', 7],
+
+    // Produção científica
+    ['Sistema REDE', 'Pesquisa em Educação Especial', 6],
+    ['Pesquisa em Educação Especial', 'Mestrado UFRN', 5],
+
+    // Biblioteca viva
+    ['Sistema REDE', 'NEXUS SYLVIA', 8],
+    ['Metodologias Próprias', 'NEXUS SYLVIA', 7],
+    ['Pesquisa Aplicada', 'NEXUS SYLVIA', 6],
+    ['Formação Complementar', 'NEXUS SYLVIA', 4]
+
+],
+
+});
+</script>
+<!-- CONTEÚDO ARC DIAGRAM -->
