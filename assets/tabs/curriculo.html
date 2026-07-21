@@ -105,7 +105,7 @@
 
 <!-- ========================= -->
 <!-- ARC DIAGRAM • NEXUS SYLVIA -->
-<!-- ========================= -->
+<!-- ========================= 
 
 <style>
 
@@ -315,4 +315,171 @@ Highcharts.chart('container', {
 });
 
 </script>
-<!-- CONTEÚDO ARC DIAGRAM -->
+CONTEÚDO ARC DIAGRAM -->
+
+
+<style>
+
+#container{
+    width:100%;
+    height:700px;
+    margin:40px auto;
+}
+
+.highcharts-title{
+    font-weight:700!important;
+}
+
+.highcharts-subtitle{
+    font-size:14px!important;
+    opacity:.8;
+}
+
+</style>
+
+<div id="container"></div>
+
+<script>
+    Highcharts.chart('container', {
+
+    chart:{
+        backgroundColor:'transparent'
+    },
+
+    title:{
+        text:'Rede de Construção do Conhecimento'
+    },
+
+    subtitle:{
+        text:'Trajetória acadêmica, profissional e científica de Sylvia'
+    },
+
+    credits:{
+        enabled:false
+    },
+
+    legend:{
+        enabled:false
+    },
+
+    accessibility:{
+        point:{
+            valueDescriptionFormat:
+            '{point.from} conecta-se a {point.to}.'
+        }
+    },
+
+    series:[{
+
+        type:'arcdiagram',
+
+        keys:['from','to','weight'],
+
+        name:'Trajetória',
+
+        centeredLinks:true,
+
+        linkWeight:3,
+
+        minLinkWidth:2,
+
+        curveFactor:.6,
+
+        offset:'60%',
+
+        dataLabels:{
+            rotation:90,
+            y:18,
+            style:{
+                fontWeight:'600',
+                textOutline:'none',
+                fontSize:'12px'
+            }
+        },
+
+        nodes:[
+
+            {
+                id:'Pedagogia UFRN',
+                color:'#F4B400'
+            },
+
+            {
+                id:'Guilherme',
+                color:'#43A047',
+                marker:{
+                    radius:20
+                }
+            },
+
+            {
+                id:'Pesquisa',
+                color:'#039BE5'
+            },
+
+            {
+                id:'Sistema REDE',
+                color:'#3949AB',
+                marker:{
+                    radius:22
+                }
+            },
+
+            {
+                id:'NEXUS SYLVIA',
+                color:'#8E24AA',
+                marker:{
+                    radius:20
+                }
+            }
+
+        ],
+
+        data:[
+
+            // Formação
+
+            ['Macau','Pedagogia UFRN',6],
+            ['Pedagogia UFRN','Natal',5],
+            ['Natal','Experiência Escolar',5],
+
+            // Experiência
+
+            ['Experiência Escolar','Escola Privada',4],
+            ['Experiência Escolar','Escola Estadual',4],
+
+            // Mudança de trajetória
+
+            ['Escola Privada','Guilherme',8],
+            ['Escola Estadual','Guilherme',6],
+
+            // Pesquisa
+
+            ['Guilherme','Pesquisa',10],
+
+            ['Pesquisa','Análise do Comportamento',5],
+            ['Pesquisa','Neuropsicopedagogia',5],
+            ['Pesquisa','Educação Inclusiva',4],
+            ['Pesquisa','Tecnologia Assistiva',3],
+            ['Pesquisa','Alfabetização',3],
+
+            // Consolidação
+
+            ['Pesquisa','Metodologias',8],
+
+            ['Metodologias','Sistema REDE',10],
+
+            // Continuidade
+
+            ['Sistema REDE','Mestrado UFRN',6],
+
+            ['Sistema REDE','NEXUS SYLVIA',9]
+
+        ]
+
+    }]
+
+});
+
+
+</script>
